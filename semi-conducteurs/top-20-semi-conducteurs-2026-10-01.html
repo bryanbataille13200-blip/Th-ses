@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Top 20 Semi-conducteurs octobre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout : fiche technique de composant. En-tête + carte de wafer (bins de test),
+   puis matrice de scores et fiches classées, regroupées par bin. */
+:root {
+  /* palette : gris silicium, encre bleu nuit, ambre « salle jaune » de lithographie */
+  --bg: #f2f3f5;
+  --surface: #fbfbfc;
+  --ink: #10141a;
+  --ink-2: #454d59;
+  --muted: #6f7885;
+  --line: #dde1e6;
+  --line-strong: #c2c8d0;
+  --accent: #9a6200;
+  --accent-soft: #f5e6c3;
+
+  /* bins (rampe ordinale bleue, plus foncé = meilleur bin) */
+  --b1: #1c5cab; --b1-ink: #ffffff;
+  --b2: #3987e5; --b2-ink: #ffffff;
+  --b3: #9ec5f4; --b3-ink: #0d366b;
+  --bx: #e3e6eb; --bx-ink: #5a6270;
+
+  /* rampe séquentielle de la matrice (notes 3 → 10) */
+  --h3: #eef4fc; --h3-ink: #10141a;
+  --h4: #cde2fb; --h4-ink: #10141a;
+  --h5: #b7d3f6; --h5-ink: #10141a;
+  --h6: #9ec5f4; --h6-ink: #10141a;
+  --h7: #6da7ec; --h7-ink: #0b1220;
+  --h8: #3987e5; --h8-ink: #ffffff;
+  --h9: #256abf; --h9-ink: #ffffff;
+  --h10: #184f95; --h10-ink: #ffffff;
+
+  /* scénarios : pessimiste / optimiste */
+  --neg: #d03b3b;
+  --pos: #2a78d6;
+  --meter: #2a78d6;
+
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --radius: 6px;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.5rem;
+  --step-3: 2.125rem;
+  --step-4: clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0d1015;
+    --surface: #151a21;
+    --ink: #eef1f5;
+    --ink-2: #b4bcc8;
+    --muted: #8a93a0;
+    --line: #252b35;
+    --line-strong: #39414d;
+    --accent: #f0b429;
+    --accent-soft: #3a2c0c;
+    --b1: #b7d3f6; --b1-ink: #0d366b;
+    --b2: #5598e7; --b2-ink: #0b1220;
+    --b3: #1c5cab; --b3-ink: #eaf2fd;
+    --bx: #262c36; --bx-ink: #9aa3b0;
+    --h3: #172231; --h3-ink: #dfe6ef;
+    --h4: #182c47; --h4-ink: #e4ecf6;
+    --h5: #184f95; --h5-ink: #f2f6fc;
+    --h6: #1c5cab; --h6-ink: #f2f6fc;
+    --h7: #2a78d6; --h7-ink: #ffffff;
+    --h8: #5598e7; --h8-ink: #0b1220;
+    --h9: #86b6ef; --h9-ink: #0b1220;
+    --h10: #b7d3f6; --h10-ink: #0b1220;
+    --neg: #e66767;
+    --pos: #3987e5;
+    --meter: #5598e7;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1015;
+  --surface: #151a21;
+  --ink: #eef1f5;
+  --ink-2: #b4bcc8;
+  --muted: #8a93a0;
+  --line: #252b35;
+  --line-strong: #39414d;
+  --accent: #f0b429;
+  --accent-soft: #3a2c0c;
+  --b1: #b7d3f6; --b1-ink: #0d366b;
+  --b2: #5598e7; --b2-ink: #0b1220;
+  --b3: #1c5cab; --b3-ink: #eaf2fd;
+  --bx: #262c36; --bx-ink: #9aa3b0;
+  --h3: #172231; --h3-ink: #dfe6ef;
+  --h4: #182c47; --h4-ink: #e4ecf6;
+  --h5: #184f95; --h5-ink: #f2f6fc;
+  --h6: #1c5cab; --h6-ink: #f2f6fc;
+  --h7: #2a78d6; --h7-ink: #ffffff;
+  --h8: #5598e7; --h8-ink: #0b1220;
+  --h9: #86b6ef; --h9-ink: #0b1220;
+  --h10: #b7d3f6; --h10-ink: #0b1220;
+  --neg: #e66767;
+  --pos: #3987e5;
+  --meter: #5598e7;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+a { color: inherit; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.page { max-width: 1140px; margin: 0 auto; padding-inline: 20px; padding-block: 12px 48px; }
+@media (max-width: 480px) { .page { padding-inline: 16px; } }
+
+h1, h2, h3 { font-family: var(--font-display); font-stretch: 82%; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: var(--step-3); font-weight: 750; line-height: 1.1; }
+.h2-small { font-size: var(--step-2); margin-top: 28px; }
+.h2-gap { margin-top: 32px; font-size: var(--step-2); }
+h4 {
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted); margin: 18px 0 6px;
+}
+h4:first-child { margin-top: 0; }
+p { margin: 0; }
+
+/* ---------- nav */
+.topnav {
+  display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline;
+  padding-block: 10px; border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: var(--step--1);
+}
+.topnav .brand { color: var(--accent); font-weight: 600; margin-right: auto; }
+.topnav a { color: var(--ink-2); text-decoration: none; }
+.topnav a:hover { color: var(--ink); }
+
+/* ---------- hero */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 40px; align-items: start; padding-block: 40px 28px;
+}
+.hero-text { min-width: 0; }
+.eyebrow { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); letter-spacing: 0.02em; }
+h1 { font-size: var(--step-4); font-weight: 800; line-height: 0.98; margin-top: 12px; font-stretch: 78%; }
+.lede { font-size: var(--step-1); color: var(--ink-2); margin-top: 18px; max-width: 60ch; line-height: 1.5; }
+
+.podium {
+  list-style: none; padding: 0; margin: 26px 0 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 20px;
+  counter-reset: none;
+}
+.podium a {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 5px 0; border-bottom: 1px solid var(--line); text-decoration: none;
+}
+.podium a:hover .pl-name { color: var(--accent); }
+.pl-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pl-score { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.pill {
+  display: inline-grid; place-items: center; min-width: 26px; height: 22px; padding: 0 5px; border-radius: 4px;
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.pill.b1, .die.b1, .sw.b1, .bin-chip.b1 { background: var(--b1); color: var(--b1-ink); fill: var(--b1); }
+.pill.b2, .die.b2, .sw.b2, .bin-chip.b2 { background: var(--b2); color: var(--b2-ink); fill: var(--b2); }
+.pill.b3, .die.b3, .sw.b3, .bin-chip.b3 { background: var(--b3); color: var(--b3-ink); fill: var(--b3); }
+.sw.bx, .die.bx { background: var(--bx); fill: var(--bx); }
+
+/* wafer */
+.hero-wafer { margin: 0; min-width: 0; }
+.wafer { width: 100%; max-width: 480px; height: auto; display: block; margin: 0 auto; }
+.wafer-disc { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.5; }
+.wafer-notch { fill: var(--bg); stroke: var(--line-strong); stroke-width: 1.5; }
+.die.empty { fill: none; stroke: var(--line); stroke-width: 1; }
+.die-link { cursor: pointer; }
+.die-link:hover .die, .die-link:focus-visible .die { stroke: var(--accent); stroke-width: 2.5; }
+.die-lbl { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; }
+.die-rank { font-family: var(--font-mono); font-size: 10px; font-weight: 500; opacity: 0.85; }
+.die-lbl.b1, .die-rank.b1 { fill: var(--b1-ink); }
+.die-lbl.b2, .die-rank.b2 { fill: var(--b2-ink); }
+.die-lbl.b3, .die-rank.b3 { fill: var(--b3-ink); }
+.die-lbl.bx { fill: var(--bx-ink); font-weight: 500; font-size: 9.5px; }
+.hero-wafer figcaption, .legend {
+  display: flex; flex-wrap: wrap; gap: 6px 16px; justify-content: center; margin-top: 12px;
+  font-size: var(--step--1); color: var(--ink-2);
+}
+.legend { justify-content: flex-start; }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+.sw-h { background: linear-gradient(90deg, var(--h4), var(--h7), var(--h10)); width: 28px; }
+
+/* ---------- sections */
+.section { padding-block: 40px 8px; }
+.section > h2 + .section-lede, .section-lede { color: var(--ink-2); max-width: 70ch; margin-top: 10px; }
+.section-lede.small { font-size: var(--step--1); }
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+.kpi-label { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.kpi-value { font-family: var(--font-display); font-stretch: 80%; font-weight: 750; font-size: 2rem; line-height: 1.1; margin-top: 4px; }
+.kpi-note { font-size: var(--step--1); color: var(--ink-2); margin-top: 4px; }
+
+.takeaways { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 32px; }
+.takeaways li { padding-top: 12px; border-top: 2px solid var(--ink); min-width: 0; }
+.takeaways strong { display: block; font-weight: 600; margin-bottom: 4px; }
+.takeaways li { color: var(--ink-2); }
+.takeaways li strong { color: var(--ink); }
+
+/* ---------- matrix */
+.table-wrap { overflow-x: auto; margin-top: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.matrix { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 860px; font-size: 0.9rem; }
+.matrix th, .matrix td { padding: 6px 8px; text-align: left; white-space: nowrap; }
+.matrix thead th {
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--muted); border-bottom: 1px solid var(--line-strong); vertical-align: bottom;
+}
+.matrix thead .w { display: block; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.matrix tbody tr.bin-start td, .matrix tbody tr.bin-start th { border-top: 1px solid var(--line-strong); }
+.matrix tbody tr:hover { background: var(--bg); }
+.c-rank { width: 40px; }
+.c-name a { font-weight: 600; text-decoration: none; }
+.c-name a:hover { color: var(--accent); }
+.c-tick { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); margin-left: 8px; font-weight: 400; }
+.matrix td.cell {
+  text-align: center; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500;
+  width: 58px; border: 2px solid var(--surface); border-radius: 4px;
+}
+.matrix th.c-score { text-align: center; }
+.c-total { font-family: var(--font-mono); font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.matrix th.c-total { text-align: right; }
+.c-scen { padding-left: 16px !important; }
+.c-scen-t { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.h3 { background: var(--h3); color: var(--h3-ink); }
+.h4 { background: var(--h4); color: var(--h4-ink); }
+.h5 { background: var(--h5); color: var(--h5-ink); }
+.h6 { background: var(--h6); color: var(--h6-ink); }
+.h7 { background: var(--h7); color: var(--h7-ink); }
+.h8 { background: var(--h8); color: var(--h8-ink); }
+.h9 { background: var(--h9); color: var(--h9-ink); }
+.h10 { background: var(--h10); color: var(--h10-ink); }
+
+/* scenario svg */
+.scen { display: block; max-width: 100%; height: auto; overflow: visible; }
+.scen .grid { stroke: var(--line); stroke-width: 1; }
+.scen .zero { stroke: var(--line-strong); stroke-width: 1.5; }
+.scen .span-neg { stroke: var(--neg); stroke-width: 2; opacity: 0.55; }
+.scen .span-pos { stroke: var(--pos); stroke-width: 2; opacity: 0.55; }
+.dot-neg { fill: var(--neg); stroke: var(--surface); stroke-width: 2; }
+.dot-pos { fill: var(--pos); stroke: var(--surface); stroke-width: 2; }
+.mid { fill: var(--ink); }
+.scen .tick { font-family: var(--font-mono); font-size: 9.5px; fill: var(--muted); }
+
+/* ---------- bins & cards */
+.bin { padding-block: 48px 0; }
+.bin-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: baseline; padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+.bin-chip {
+  font-family: var(--font-mono); font-weight: 600; font-size: 0.85rem; padding: 4px 10px; border-radius: 4px;
+  letter-spacing: 0.04em; align-self: center;
+}
+.bin-head h2 { font-size: var(--step-3); }
+.bin-range { font-family: var(--font-mono); font-size: var(--step--1); font-weight: 400; color: var(--muted); font-stretch: 100%; letter-spacing: 0; margin-left: 6px; }
+.bin-head p { grid-column: 2; color: var(--ink-2); max-width: 70ch; }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-top: 20px; scroll-margin-top: 16px; }
+.card-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px; align-items: start; }
+.rank { display: grid; justify-items: center; gap: 2px; min-width: 64px; }
+.rank-n { font-family: var(--font-display); font-stretch: 75%; font-weight: 800; font-size: 3.4rem; line-height: 0.9; color: var(--accent); font-variant-numeric: tabular-nums; }
+.rank-bin { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; padding: 2px 6px; border-radius: 3px; }
+.rank.b1 .rank-bin { background: var(--b1); color: var(--b1-ink); }
+.rank.b2 .rank-bin { background: var(--b2); color: var(--b2-ink); }
+.rank.b3 .rank-bin { background: var(--b3); color: var(--b3-ink); }
+.ident { min-width: 0; }
+.ident h3 { font-size: var(--step-3); font-weight: 750; line-height: 1.05; overflow-wrap: anywhere; hyphens: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+.tick { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; padding: 1px 6px; border: 1px solid var(--line-strong); border-radius: 3px; }
+.venue { font-size: var(--step--1); color: var(--muted); margin-right: 8px; }
+.pea { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; padding: 2px 6px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+.segment { margin-top: 6px; color: var(--ink-2); font-size: 0.95rem; }
+.total { text-align: right; }
+.total-n { display: block; font-family: var(--font-mono); font-size: 1.6rem; font-weight: 600; line-height: 1; }
+.total-l { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+.specs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 20px 0 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.spec { padding: 10px 12px 10px 0; min-width: 0; }
+.spec + .spec { padding-left: 12px; border-left: 1px solid var(--line); }
+.spec dt { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.spec dd { margin: 3px 0 0; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; line-height: 1.35; }
+
+.why { margin-top: 18px; font-size: 1.05rem; line-height: 1.55; max-width: 92ch; }
+.why-l {
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent); margin-right: 6px; white-space: nowrap;
+}
+
+.cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin-top: 20px; }
+.cols.foot { padding-top: 18px; border-top: 1px dashed transparent; border-top: 1px solid var(--line); }
+.block { min-width: 0; }
+.block p { color: var(--ink-2); font-size: 0.95rem; }
+.list { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 0.95rem; }
+.list li + li { margin-top: 6px; }
+.list li::marker { color: var(--accent); }
+.risks li::marker { color: var(--neg); }
+.h4-note { text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+.meters { display: grid; gap: 7px; }
+.meter { display: grid; grid-template-columns: 148px minmax(0, 1fr) 30px; gap: 10px; align-items: center; font-size: var(--step--1); }
+.m-lbl { color: var(--ink-2); }
+.m-track { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.m-fill { display: block; height: 100%; background: var(--meter); border-radius: 3px; }
+.m-val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.scen-big { max-width: 340px; }
+.scen-vals { font-family: var(--font-mono); font-size: var(--step--1); margin-top: 6px; color: var(--ink-2) !important; }
+.scen-vals .neg, .scen-vals .pos { color: var(--ink); }
+.cat { margin-top: 14px; font-size: 0.9rem !important; }
+.cat-l { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-right: 4px; }
+
+/* ---------- rejects */
+.rejects { list-style: none; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.rej { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; min-width: 0; }
+.rej-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.rej-metric { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+.rej p { color: var(--ink-2); font-size: 0.9rem; margin-top: 6px; }
+
+/* ---------- risks, calendar */
+.split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; }
+.split > div { min-width: 0; }
+.split h2 { font-size: var(--step-2); }
+.risks-list { margin: 16px 0 0; padding: 0; list-style: none; counter-reset: risk; display: grid; gap: 14px; }
+.risks-list li { counter-increment: risk; display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 10px; }
+.risks-list li::before {
+  content: counter(risk); grid-row: span 2; font-family: var(--font-display); font-stretch: 75%; font-weight: 800;
+  font-size: 1.8rem; line-height: 1; color: var(--neg);
+}
+.risks-list strong { font-weight: 600; }
+.risks-list p { color: var(--ink-2); font-size: 0.95rem; }
+.cal { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.92rem; }
+.cal th, .cal td { text-align: left; padding: 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cal th { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--accent); width: 122px; padding-right: 12px; }
+.cal td { color: var(--ink-2); }
+.howto { margin: 12px 0 0; padding-left: 18px; color: var(--ink-2); display: grid; gap: 8px; }
+.howto li::marker { color: var(--accent); }
+
+/* ---------- method & sources */
+.method { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin: 18px 0 0; }
+.method div { border-top: 2px solid var(--ink); padding-top: 10px; min-width: 0; }
+.method dt { font-weight: 600; font-size: 0.95rem; }
+.method dd { margin: 4px 0 0; color: var(--ink-2); font-size: 0.9rem; }
+.note { margin-top: 20px; font-size: 0.88rem; color: var(--muted); max-width: 90ch; }
+.sources { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 28px; margin-top: 16px; }
+.src-group { min-width: 0; }
+.src-group h3 { font-family: var(--font-mono); font-stretch: 100%; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.src-group ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 6px; font-size: 0.88rem; }
+.src-group a { color: var(--ink-2); overflow-wrap: anywhere; }
+.foot-page { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); font-size: var(--step--1); color: var(--muted); }
+
+/* ---------- responsive */
+@media (max-width: 960px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .hero-wafer { order: -1; max-width: 420px; margin-inline: auto; width: 100%; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .method { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rejects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .sources { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .cols { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .cols .block + .block { margin-top: 14px; }
+  .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spec:nth-child(3) { padding-left: 0; border-left: 0; }
+  .spec:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .takeaways { grid-template-columns: minmax(0, 1fr); }
+  .card { padding: 18px 16px; }
+  .card-head { grid-template-columns: auto minmax(0, 1fr); }
+  .total { grid-column: 1 / -1; text-align: left; display: flex; gap: 8px; align-items: baseline; }
+  .total-n { display: inline; font-size: 1.3rem; }
+  .rank-n { font-size: 2.6rem; }
+  .podium { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .kpis, .method, .rejects, .sources { grid-template-columns: minmax(0, 1fr); }
+  .meter { grid-template-columns: 118px minmax(0, 1fr) 28px; }
+  .bin-head { grid-template-columns: minmax(0, 1fr); }
+  .bin-head p { grid-column: 1; }
+  .bin-chip { justify-self: start; }
+  .kpi-value { font-size: 1.7rem; }
+  .ident h3 { font-size: 1.7rem; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="page">
+<nav class="topnav" aria-label="Sections">
+  <span class="brand">Note semi-conducteurs · 1er octobre 2026</span>
+  <a href="#synthese">Synthèse</a><a href="#matrice">Matrice</a><a href="#bin1">Classement</a>
+  <a href="#recales">Recalés</a><a href="#risques">Risques</a><a href="#methode">Méthode</a><a href="#sources">Sources</a>
+</nav>
+
+<header class="hero" id="synthese">
+  <div class="hero-text">
+    <p class="eyebrow">Données de marché au 30 septembre 2026 · 42 sociétés analysées</p>
+    <h1>Top 20 des semi-conducteurs à acheter</h1>
+    <p class="lede">Après une hausse de 77 % du SOX en 2026, les meilleures affaires ne se trouvent plus là où le marché a couru. Ce classement croise la solidité du moat, la croissance attendue jusqu'en 2028, la valorisation actuelle et future, et les risques. Il retient 20 sociétés réparties en trois bins, comme au test des puces sur wafer.</p>
+    <ol class="podium"><li><a href="#r1"><span class="pill b1">1</span><span class="pl-name">Broadcom</span><span class="pl-score">8,35</span></a></li><li><a href="#r2"><span class="pill b1">2</span><span class="pl-name">Nvidia</span><span class="pl-score">8,10</span></a></li><li><a href="#r3"><span class="pill b1">3</span><span class="pl-name">TSMC</span><span class="pl-score">7,95</span></a></li><li><a href="#r4"><span class="pill b1">4</span><span class="pl-name">ASML</span><span class="pl-score">7,60</span></a></li><li><a href="#r5"><span class="pill b2">5</span><span class="pl-name">Samsung Electronics</span><span class="pl-score">7,38</span></a></li><li><a href="#r6"><span class="pill b2">6</span><span class="pl-name">Credo Technology</span><span class="pl-score">7,33</span></a></li><li><a href="#r7"><span class="pill b2">7</span><span class="pl-name">Lam Research</span><span class="pl-score">7,28</span></a></li><li><a href="#r8"><span class="pill b2">8</span><span class="pl-name">Analog Devices</span><span class="pl-score">7,25</span></a></li><li><a href="#r9"><span class="pill b2">9</span><span class="pl-name">Micron Technology</span><span class="pl-score">7,05</span></a></li><li><a href="#r10"><span class="pill b2">10</span><span class="pl-name">SK hynix</span><span class="pl-score">7,03</span></a></li><li><a href="#r11"><span class="pill b2">11</span><span class="pl-name">Applied Materials</span><span class="pl-score">7,00</span></a></li><li><a href="#r12"><span class="pill b2">12</span><span class="pl-name">NXP Semiconductors</span><span class="pl-score">6,95</span></a></li><li><a href="#r13"><span class="pill b3">13</span><span class="pl-name">KLA</span><span class="pl-score">6,90</span></a></li><li><a href="#r14"><span class="pill b3">14</span><span class="pl-name">Advantest</span><span class="pl-score">6,85</span></a></li><li><a href="#r15"><span class="pill b3">15</span><span class="pl-name">AMD</span><span class="pl-score">6,78</span></a></li><li><a href="#r16"><span class="pill b3">16</span><span class="pl-name">Texas Instruments</span><span class="pl-score">6,67</span></a></li><li><a href="#r17"><span class="pill b3">17</span><span class="pl-name">ASM International</span><span class="pl-score">6,55</span></a></li><li><a href="#r18"><span class="pill b3">18</span><span class="pl-name">Infineon</span><span class="pl-score">6,45</span></a></li><li><a href="#r19"><span class="pill b3">19</span><span class="pl-name">Qualcomm</span><span class="pl-score">6,25</span></a></li><li><a href="#r20"><span class="pill b3">20</span><span class="pl-name">Lumentum</span><span class="pl-score">6,20</span></a></li></ol>
+  </div>
+  <figure class="hero-wafer">
+    <svg class="wafer" viewBox="0 0 480 480" role="img" aria-labelledby="wafer-title wafer-desc"><title id="wafer-title">Carte de wafer du classement</title><desc id="wafer-desc">Chaque puce est une société analysée. Les 20 retenues sont au centre, colorées par bin. Les 21 recalées sont en gris, les puces vides sont hors univers.</desc><circle class="wafer-disc" cx="240" cy="240" r="230"/><path class="wafer-notch" d="M 231 469 a 9 9 0 0 1 18 0 z"/><a href="#r1" class="die-link"><title>n°1 Broadcom · BIN 1 · score 8,35</title><rect class="die b1" x="218.0" y="218.0" width="44" height="44" rx="3"/><text class="die-rank b1" x="223.0" y="231.0">1</text><text class="die-lbl b1" x="240.0" y="253.0" text-anchor="middle">AVGO</text></a><a href="#r2" class="die-link"><title>n°2 Nvidia · BIN 1 · score 8,10</title><rect class="die b1" x="172.0" y="218.0" width="44" height="44" rx="3"/><text class="die-rank b1" x="177.0" y="231.0">2</text><text class="die-lbl b1" x="194.0" y="253.0" text-anchor="middle">NVDA</text></a><a href="#r3" class="die-link"><title>n°3 TSMC · BIN 1 · score 7,95</title><rect class="die b1" x="264.0" y="218.0" width="44" height="44" rx="3"/><text class="die-rank b1" x="269.0" y="231.0">3</text><text class="die-lbl b1" x="286.0" y="253.0" text-anchor="middle">TSM</text></a><a href="#r4" class="die-link"><title>n°4 ASML · BIN 1 · score 7,60</title><rect class="die b1" x="218.0" y="172.0" width="44" height="44" rx="3"/><text class="die-rank b1" x="223.0" y="185.0">4</text><text class="die-lbl b1" x="240.0" y="207.0" text-anchor="middle">ASML</text></a><a href="#r5" class="die-link"><title>n°5 Samsung Electronics · BIN 2 · score 7,38</title><rect class="die b2" x="218.0" y="264.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="223.0" y="277.0">5</text><text class="die-lbl b2" x="240.0" y="299.0" text-anchor="middle">SMSN</text></a><a href="#r6" class="die-link"><title>n°6 Credo Technology · BIN 2 · score 7,33</title><rect class="die b2" x="172.0" y="172.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="177.0" y="185.0">6</text><text class="die-lbl b2" x="194.0" y="207.0" text-anchor="middle">CRDO</text></a><a href="#r7" class="die-link"><title>n°7 Lam Research · BIN 2 · score 7,28</title><rect class="die b2" x="264.0" y="172.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="269.0" y="185.0">7</text><text class="die-lbl b2" x="286.0" y="207.0" text-anchor="middle">LRCX</text></a><a href="#r8" class="die-link"><title>n°8 Analog Devices · BIN 2 · score 7,25</title><rect class="die b2" x="172.0" y="264.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="177.0" y="277.0">8</text><text class="die-lbl b2" x="194.0" y="299.0" text-anchor="middle">ADI</text></a><a href="#r9" class="die-link"><title>n°9 Micron Technology · BIN 2 · score 7,05</title><rect class="die b2" x="264.0" y="264.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="269.0" y="277.0">9</text><text class="die-lbl b2" x="286.0" y="299.0" text-anchor="middle">MU</text></a><a href="#r10" class="die-link"><title>n°10 SK hynix · BIN 2 · score 7,03</title><rect class="die b2" x="126.0" y="218.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="131.0" y="231.0">10</text><text class="die-lbl b2" x="148.0" y="253.0" text-anchor="middle">SKHY</text></a><a href="#r11" class="die-link"><title>n°11 Applied Materials · BIN 2 · score 7,00</title><rect class="die b2" x="310.0" y="218.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="315.0" y="231.0">11</text><text class="die-lbl b2" x="332.0" y="253.0" text-anchor="middle">AMAT</text></a><a href="#r12" class="die-link"><title>n°12 NXP Semiconductors · BIN 2 · score 6,95</title><rect class="die b2" x="218.0" y="126.0" width="44" height="44" rx="3"/><text class="die-rank b2" x="223.0" y="139.0">12</text><text class="die-lbl b2" x="240.0" y="161.0" text-anchor="middle">NXPI</text></a><a href="#r13" class="die-link"><title>n°13 KLA · BIN 3 · score 6,90</title><rect class="die b3" x="218.0" y="310.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="223.0" y="323.0">13</text><text class="die-lbl b3" x="240.0" y="345.0" text-anchor="middle">KLAC</text></a><a href="#r14" class="die-link"><title>n°14 Advantest · BIN 3 · score 6,85</title><rect class="die b3" x="126.0" y="172.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="131.0" y="185.0">14</text><text class="die-lbl b3" x="148.0" y="207.0" text-anchor="middle">6857</text></a><a href="#r15" class="die-link"><title>n°15 AMD · BIN 3 · score 6,78</title><rect class="die b3" x="310.0" y="172.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="315.0" y="185.0">15</text><text class="die-lbl b3" x="332.0" y="207.0" text-anchor="middle">AMD</text></a><a href="#r16" class="die-link"><title>n°16 Texas Instruments · BIN 3 · score 6,67</title><rect class="die b3" x="126.0" y="264.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="131.0" y="277.0">16</text><text class="die-lbl b3" x="148.0" y="299.0" text-anchor="middle">TXN</text></a><a href="#r17" class="die-link"><title>n°17 ASM International · BIN 3 · score 6,55</title><rect class="die b3" x="310.0" y="264.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="315.0" y="277.0">17</text><text class="die-lbl b3" x="332.0" y="299.0" text-anchor="middle">ASM</text></a><a href="#r18" class="die-link"><title>n°18 Infineon · BIN 3 · score 6,45</title><rect class="die b3" x="172.0" y="126.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="177.0" y="139.0">18</text><text class="die-lbl b3" x="194.0" y="161.0" text-anchor="middle">IFX</text></a><a href="#r19" class="die-link"><title>n°19 Qualcomm · BIN 3 · score 6,25</title><rect class="die b3" x="264.0" y="126.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="269.0" y="139.0">19</text><text class="die-lbl b3" x="286.0" y="161.0" text-anchor="middle">QCOM</text></a><a href="#r20" class="die-link"><title>n°20 Lumentum · BIN 3 · score 6,20</title><rect class="die b3" x="172.0" y="310.0" width="44" height="44" rx="3"/><text class="die-rank b3" x="177.0" y="323.0">20</text><text class="die-lbl b3" x="194.0" y="345.0" text-anchor="middle">LITE</text></a><a href="#recales" class="die-link"><title>Marvell · recalé</title><rect class="die bx" x="264.0" y="310.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="286.0" y="336.0" text-anchor="middle">MRVL</text></a><a href="#recales" class="die-link"><title>Astera Labs · recalé</title><rect class="die bx" x="126.0" y="126.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="148.0" y="152.0" text-anchor="middle">ALAB</text></a><a href="#recales" class="die-link"><title>Arm Holdings · recalé</title><rect class="die bx" x="310.0" y="126.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="332.0" y="152.0" text-anchor="middle">ARM</text></a><a href="#recales" class="die-link"><title>Intel · recalé</title><rect class="die bx" x="126.0" y="310.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="148.0" y="336.0" text-anchor="middle">INTC</text></a><a href="#recales" class="die-link"><title>Coherent · recalé</title><rect class="die bx" x="310.0" y="310.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="332.0" y="336.0" text-anchor="middle">COHR</text></a><a href="#recales" class="die-link"><title>MediaTek · recalé</title><rect class="die bx" x="80.0" y="218.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="102.0" y="244.0" text-anchor="middle">2454</text></a><a href="#recales" class="die-link"><title>SanDisk · recalé</title><rect class="die bx" x="356.0" y="218.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="378.0" y="244.0" text-anchor="middle">SNDK</text></a><a href="#recales" class="die-link"><title>Kioxia · recalé</title><rect class="die bx" x="218.0" y="80.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="240.0" y="106.0" text-anchor="middle">285A</text></a><a href="#recales" class="die-link"><title>Teradyne · recalé</title><rect class="die bx" x="218.0" y="356.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="240.0" y="382.0" text-anchor="middle">TER</text></a><a href="#recales" class="die-link"><title>Tokyo Electron · recalé</title><rect class="die bx" x="80.0" y="172.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="102.0" y="198.0" text-anchor="middle">8035</text></a><a href="#recales" class="die-link"><title>Monolithic Power · recalé</title><rect class="die bx" x="356.0" y="172.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="378.0" y="198.0" text-anchor="middle">MPWR</text></a><a href="#recales" class="die-link"><title>onsemi · recalé</title><rect class="die bx" x="80.0" y="264.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="102.0" y="290.0" text-anchor="middle">ON</text></a><a href="#recales" class="die-link"><title>GlobalFoundries · recalé</title><rect class="die bx" x="356.0" y="264.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="378.0" y="290.0" text-anchor="middle">GFS</text></a><a href="#recales" class="die-link"><title>BE Semiconductor · recalé</title><rect class="die bx" x="172.0" y="80.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="194.0" y="106.0" text-anchor="middle">BESI</text></a><a href="#recales" class="die-link"><title>STMicroelectronics · recalé</title><rect class="die bx" x="264.0" y="80.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="286.0" y="106.0" text-anchor="middle">STM</text></a><a href="#recales" class="die-link"><title>Camtek · recalé</title><rect class="die bx" x="172.0" y="356.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="194.0" y="382.0" text-anchor="middle">CAMT</text></a><a href="#recales" class="die-link"><title>Lattice · recalé</title><rect class="die bx" x="264.0" y="356.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="286.0" y="382.0" text-anchor="middle">LSCC</text></a><a href="#recales" class="die-link"><title>Rambus · recalé</title><rect class="die bx" x="80.0" y="126.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="102.0" y="152.0" text-anchor="middle">RMBS</text></a><a href="#recales" class="die-link"><title>SiTime · recalé</title><rect class="die bx" x="356.0" y="126.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="378.0" y="152.0" text-anchor="middle">SITM</text></a><a href="#recales" class="die-link"><title>Synopsys · Cadence · recalé</title><rect class="die bx" x="80.0" y="310.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="102.0" y="336.0" text-anchor="middle">SNPS</text></a><a href="#recales" class="die-link"><title>SMIC · Cambricon · recalé</title><rect class="die bx" x="356.0" y="310.0" width="44" height="44" rx="3"/><text class="die-lbl bx" x="378.0" y="336.0" text-anchor="middle">SMIC</text></a><rect class="die empty" x="126.0" y="80.0" width="44" height="44" rx="3"/><rect class="die empty" x="310.0" y="80.0" width="44" height="44" rx="3"/><rect class="die empty" x="126.0" y="356.0" width="44" height="44" rx="3"/><rect class="die empty" x="310.0" y="356.0" width="44" height="44" rx="3"/><rect class="die empty" x="34.0" y="218.0" width="44" height="44" rx="3"/><rect class="die empty" x="402.0" y="218.0" width="44" height="44" rx="3"/><rect class="die empty" x="218.0" y="34.0" width="44" height="44" rx="3"/><rect class="die empty" x="218.0" y="402.0" width="44" height="44" rx="3"/><rect class="die empty" x="34.0" y="172.0" width="44" height="44" rx="3"/><rect class="die empty" x="402.0" y="172.0" width="44" height="44" rx="3"/><rect class="die empty" x="34.0" y="264.0" width="44" height="44" rx="3"/><rect class="die empty" x="402.0" y="264.0" width="44" height="44" rx="3"/><rect class="die empty" x="172.0" y="34.0" width="44" height="44" rx="3"/><rect class="die empty" x="264.0" y="34.0" width="44" height="44" rx="3"/><rect class="die empty" x="172.0" y="402.0" width="44" height="44" rx="3"/><rect class="die empty" x="264.0" y="402.0" width="44" height="44" rx="3"/><rect class="die empty" x="80.0" y="80.0" width="44" height="44" rx="3"/><rect class="die empty" x="356.0" y="80.0" width="44" height="44" rx="3"/><rect class="die empty" x="80.0" y="356.0" width="44" height="44" rx="3"/><rect class="die empty" x="356.0" y="356.0" width="44" height="44" rx="3"/></svg>
+    <figcaption>
+      <span class="lg"><span class="sw b1"></span>BIN 1 · conviction forte</span>
+      <span class="lg"><span class="sw b2"></span>BIN 2 · achat</span>
+      <span class="lg"><span class="sw b3"></span>BIN 3 · sélectif</span>
+      <span class="lg"><span class="sw bx"></span>Recalé</span>
+    </figcaption>
+  </figure>
+</header>
+
+<section class="section" aria-labelledby="ctx-t">
+  <h2 id="ctx-t" class="sr-only">Contexte de marché</h2>
+  <div class="kpis"><div class="kpi"><div class="kpi-label">SOX</div><div class="kpi-value">12 616</div><div class="kpi-note">+77 % depuis le 1er janvier, après -22 % en juillet</div></div><div class="kpi"><div class="kpi-label">Capex IA 2027</div><div class="kpi-value">≈ 1,3 T$</div><div class="kpi-note">Six hyperscalers, +50 % sur un an (S&amp;P Global)</div></div><div class="kpi"><div class="kpi-label">WFE 2027e</div><div class="kpi-value">190-210 Md$</div><div class="kpi-note">Marché des équipements, après 150-156 Md$ en 2026</div></div><div class="kpi"><div class="kpi-label">Fed funds</div><div class="kpi-value">3,75-4,00 %</div><div class="kpi-note">Première hausse depuis 2023, le 16 septembre</div></div></div>
+  <h2 class="h2-small">Ce qu'il faut retenir</h2>
+  <ul class="takeaways"><li><strong>L'opportunité a changé de place.</strong> En 2026, la hausse est venue de la mémoire (Micron +284 %, SanDisk +647 %) et des seconds couteaux. Les leaders de l'IA ont été délaissés : Broadcom est à plat, Nvidia ne prend que 22 %. Ce sont aujourd'hui les meilleurs rapports qualité/prix.</li><li><strong>Le cycle d'équipement 2027 est le thème le plus visible.</strong> Le WFE doit passer d'environ 150 à environ 200 Md$. ASML, Lam, Applied Materials, KLA, Advantest et ASM International en profitent.</li><li><strong>La mémoire est bon marché parce qu'elle est au sommet.</strong> Un PER de 4 à 7x est typique d'un pic de cycle. Elle mérite sa place dans le top 10, avec une taille de position plafonnée.</li><li><strong>L'analogique repart à peine.</strong> ADI, NXP, Texas Instruments et Infineon diversifient hors IA et amortissent les chocs.</li><li><strong>Les valorisations extrêmes restent à l'écart.</strong> Arm, Astera Labs, Camtek, Monolithic Power et Intel ont été analysés et recalés.</li></ul>
+</section>
+
+<section class="section" id="matrice" aria-labelledby="mat-t">
+  <h2 id="mat-t">Matrice des scores</h2>
+  <p class="section-lede">Cinq critères notés de 0 à 10 et pondérés. Le classement suit le score composite. La colonne des scénarios montre la fourchette 12-18 mois que j'estime pour chaque titre (BPA futur × multiple plausible).</p>
+  
+<div class="table-wrap" tabindex="0" role="region" aria-label="Matrice des scores">
+<table class="matrix">
+<thead><tr><th scope="col" class="c-rank">#</th><th scope="col" class="c-name">Société</th><th scope="col" class="c-score" title="Moat &amp; qualité (25 %)">Moat<span class="w">25 %</span></th><th scope="col" class="c-score" title="Croissance 26-28 (20 %)">Croiss.<span class="w">20 %</span></th><th scope="col" class="c-score" title="Valorisation (25 %)">Valo<span class="w">25 %</span></th><th scope="col" class="c-score" title="Risque (10 = faible) (20 %)">Risque<span class="w">20 %</span></th><th scope="col" class="c-score" title="Catalyseurs (10 %)">Catal.<span class="w">10 %</span></th>
+<th scope="col" class="c-total">Score<span class="w">/10</span></th>
+<th scope="col" class="c-scen">Scénarios 12-18 mois<span class="w">−50 → +80 %</span></th>
+<th scope="col" class="c-scen-t">Bas / central / haut</th></tr></thead>
+<tbody><tr><td class="c-rank"><span class="pill b1">1</span></td><th scope="row" class="c-name"><a href="#r1">Broadcom</a><span class="c-tick">AVGO</span></th><td class="cell h9">9</td><td class="cell h10">10</td><td class="cell h8">8</td><td class="cell h6">6</td><td class="cell h9">9</td><td class="c-total">8,35</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -20 %, central +40 %, optimiste +80 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="38.9" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="142.0" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="38.9" cy="11.0" r="4"/><circle class="dot-pos" cx="142.0" cy="11.0" r="4"/><rect class="mid" x="99.3" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−20 / +40 / +80 %</td></tr><tr><td class="c-rank"><span class="pill b1">2</span></td><th scope="row" class="c-name"><a href="#r2">Nvidia</a><span class="c-tick">NVDA</span></th><td class="cell h10">10</td><td class="cell h8">8</td><td class="cell h8">8</td><td class="cell h6">6</td><td class="cell h8">8</td><td class="c-total">8,10</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -25 %, central +35 %, optimiste +65 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="33.8" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="126.5" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="33.8" cy="11.0" r="4"/><circle class="dot-pos" cx="126.5" cy="11.0" r="4"/><rect class="mid" x="94.1" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−25 / +35 / +65 %</td></tr><tr><td class="c-rank"><span class="pill b1">3</span></td><th scope="row" class="c-name"><a href="#r3">TSMC</a><span class="c-tick">TSM</span></th><td class="cell h10">10</td><td class="cell h8">8</td><td class="cell h7">7</td><td class="cell h6">6,5</td><td class="cell h8">8</td><td class="c-total">7,95</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -25 %, central +20 %, optimiste +45 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="33.8" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="105.9" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="33.8" cy="11.0" r="4"/><circle class="dot-pos" cx="105.9" cy="11.0" r="4"/><rect class="mid" x="78.7" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−25 / +20 / +45 %</td></tr><tr><td class="c-rank"><span class="pill b1">4</span></td><th scope="row" class="c-name"><a href="#r4">ASML</a><span class="c-tick">ASML</span></th><td class="cell h10">10</td><td class="cell h7">7</td><td class="cell h6">6</td><td class="cell h7">7</td><td class="cell h8">8</td><td class="c-total">7,60</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -25 %, central +20 %, optimiste +45 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="33.8" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="105.9" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="33.8" cy="11.0" r="4"/><circle class="dot-pos" cx="105.9" cy="11.0" r="4"/><rect class="mid" x="78.7" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−25 / +20 / +45 %</td></tr><tr class="bin-start"><td class="c-rank"><span class="pill b2">5</span></td><th scope="row" class="c-name"><a href="#r5">Samsung Electronics</a><span class="c-tick">005930</span></th><td class="cell h7">7</td><td class="cell h8">8,5</td><td class="cell h9">9,5</td><td class="cell h4">4</td><td class="cell h7">7,5</td><td class="c-total">7,38</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -35 %, central +35 %, optimiste +70 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="23.5" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="131.7" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="23.5" cy="11.0" r="4"/><circle class="dot-pos" cx="131.7" cy="11.0" r="4"/><rect class="mid" x="94.1" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−35 / +35 / +70 %</td></tr><tr><td class="c-rank"><span class="pill b2">6</span></td><th scope="row" class="c-name"><a href="#r6">Credo Technology</a><span class="c-tick">CRDO</span></th><td class="cell h7">7</td><td class="cell h10">10</td><td class="cell h7">7,5</td><td class="cell h4">4,5</td><td class="cell h8">8</td><td class="c-total">7,33</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -45 %, central +30 %, optimiste +80 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="13.2" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="142.0" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="13.2" cy="11.0" r="4"/><circle class="dot-pos" cx="142.0" cy="11.0" r="4"/><rect class="mid" x="89.0" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−45 / +30 / +80 %</td></tr><tr><td class="c-rank"><span class="pill b2">7</span></td><th scope="row" class="c-name"><a href="#r7">Lam Research</a><span class="c-tick">LRCX</span></th><td class="cell h8">8,5</td><td class="cell h9">9</td><td class="cell h5">5</td><td class="cell h6">6</td><td class="cell h9">9</td><td class="c-total">7,28</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -30 %, central +18 %, optimiste +45 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="28.6" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="105.9" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="28.6" cy="11.0" r="4"/><circle class="dot-pos" cx="105.9" cy="11.0" r="4"/><rect class="mid" x="76.6" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−30 / +18 / +45 %</td></tr><tr><td class="c-rank"><span class="pill b2">8</span></td><th scope="row" class="c-name"><a href="#r8">Analog Devices</a><span class="c-tick">ADI</span></th><td class="cell h9">9</td><td class="cell h6">6,5</td><td class="cell h6">6</td><td class="cell h8">8</td><td class="cell h6">6</td><td class="c-total">7,25</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -20 %, central +15 %, optimiste +32 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="38.9" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="92.5" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="38.9" cy="11.0" r="4"/><circle class="dot-pos" cx="92.5" cy="11.0" r="4"/><rect class="mid" x="73.5" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−20 / +15 / +32 %</td></tr><tr><td class="c-rank"><span class="pill b2">9</span></td><th scope="row" class="c-name"><a href="#r9">Micron Technology</a><span class="c-tick">MU</span></th><td class="cell h7">7</td><td class="cell h9">9</td><td class="cell h8">8</td><td class="cell h3">3,5</td><td class="cell h8">8</td><td class="c-total">7,05</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -45 %, central +20 %, optimiste +60 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="13.2" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="121.4" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="13.2" cy="11.0" r="4"/><circle class="dot-pos" cx="121.4" cy="11.0" r="4"/><rect class="mid" x="78.7" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−45 / +20 / +60 %</td></tr><tr><td class="c-rank"><span class="pill b2">10</span></td><th scope="row" class="c-name"><a href="#r10">SK hynix</a><span class="c-tick">000660</span></th><td class="cell h7">7,5</td><td class="cell h8">8</td><td class="cell h9">9</td><td class="cell h3">3,5</td><td class="cell h6">6</td><td class="c-total">7,03</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -45 %, central +25 %, optimiste +65 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="13.2" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="126.5" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="13.2" cy="11.0" r="4"/><circle class="dot-pos" cx="126.5" cy="11.0" r="4"/><rect class="mid" x="83.8" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−45 / +25 / +65 %</td></tr><tr><td class="c-rank"><span class="pill b2">11</span></td><th scope="row" class="c-name"><a href="#r11">Applied Materials</a><span class="c-tick">AMAT</span></th><td class="cell h8">8</td><td class="cell h7">7</td><td class="cell h7">7</td><td class="cell h6">6</td><td class="cell h6">6,5</td><td class="c-total">7,00</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -25 %, central +18 %, optimiste +40 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="33.8" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="100.8" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="33.8" cy="11.0" r="4"/><circle class="dot-pos" cx="100.8" cy="11.0" r="4"/><rect class="mid" x="76.6" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−25 / +18 / +40 %</td></tr><tr><td class="c-rank"><span class="pill b2">12</span></td><th scope="row" class="c-name"><a href="#r12">NXP Semiconductors</a><span class="c-tick">NXPI</span></th><td class="cell h7">7,5</td><td class="cell h5">5,5</td><td class="cell h8">8,5</td><td class="cell h6">6,5</td><td class="cell h5">5,5</td><td class="c-total">6,95</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -20 %, central +22 %, optimiste +42 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="38.9" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="102.8" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="38.9" cy="11.0" r="4"/><circle class="dot-pos" cx="102.8" cy="11.0" r="4"/><rect class="mid" x="80.7" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−20 / +22 / +42 %</td></tr><tr class="bin-start"><td class="c-rank"><span class="pill b3">13</span></td><th scope="row" class="c-name"><a href="#r13">KLA</a><span class="c-tick">KLAC</span></th><td class="cell h10">10</td><td class="cell h7">7</td><td class="cell h4">4</td><td class="cell h7">7</td><td class="cell h6">6</td><td class="c-total">6,90</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -25 %, central +12 %, optimiste +30 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="33.8" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="90.5" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="33.8" cy="11.0" r="4"/><circle class="dot-pos" cx="90.5" cy="11.0" r="4"/><rect class="mid" x="70.4" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−25 / +12 / +30 %</td></tr><tr><td class="c-rank"><span class="pill b3">14</span></td><th scope="row" class="c-name"><a href="#r14">Advantest</a><span class="c-tick">6857</span></th><td class="cell h9">9</td><td class="cell h8">8</td><td class="cell h5">5</td><td class="cell h5">5</td><td class="cell h7">7,5</td><td class="c-total">6,85</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -35 %, central +15 %, optimiste +40 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="23.5" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="100.8" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="23.5" cy="11.0" r="4"/><circle class="dot-pos" cx="100.8" cy="11.0" r="4"/><rect class="mid" x="73.5" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−35 / +15 / +40 %</td></tr><tr><td class="c-rank"><span class="pill b3">15</span></td><th scope="row" class="c-name"><a href="#r15">AMD</a><span class="c-tick">AMD</span></th><td class="cell h7">7,5</td><td class="cell h10">10</td><td class="cell h4">4</td><td class="cell h5">5</td><td class="cell h9">9</td><td class="c-total">6,78</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -40 %, central +15 %, optimiste +50 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="18.3" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="111.1" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="18.3" cy="11.0" r="4"/><circle class="dot-pos" cx="111.1" cy="11.0" r="4"/><rect class="mid" x="73.5" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−40 / +15 / +50 %</td></tr><tr><td class="c-rank"><span class="pill b3">16</span></td><th scope="row" class="c-name"><a href="#r16">Texas Instruments</a><span class="c-tick">TXN</span></th><td class="cell h8">8,5</td><td class="cell h6">6</td><td class="cell h5">5</td><td class="cell h7">7,5</td><td class="cell h6">6</td><td class="c-total">6,67</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -20 %, central +12 %, optimiste +30 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="38.9" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="90.5" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="38.9" cy="11.0" r="4"/><circle class="dot-pos" cx="90.5" cy="11.0" r="4"/><rect class="mid" x="70.4" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−20 / +12 / +30 %</td></tr><tr><td class="c-rank"><span class="pill b3">17</span></td><th scope="row" class="c-name"><a href="#r17">ASM International</a><span class="c-tick">ASM</span></th><td class="cell h9">9</td><td class="cell h7">7,5</td><td class="cell h4">4</td><td class="cell h6">6</td><td class="cell h6">6</td><td class="c-total">6,55</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -30 %, central +20 %, optimiste +45 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="28.6" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="105.9" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="28.6" cy="11.0" r="4"/><circle class="dot-pos" cx="105.9" cy="11.0" r="4"/><rect class="mid" x="78.7" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−30 / +20 / +45 %</td></tr><tr><td class="c-rank"><span class="pill b3">18</span></td><th scope="row" class="c-name"><a href="#r18">Infineon</a><span class="c-tick">IFX</span></th><td class="cell h7">7,5</td><td class="cell h6">6,5</td><td class="cell h5">5,5</td><td class="cell h6">6,5</td><td class="cell h6">6</td><td class="c-total">6,45</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -25 %, central +15 %, optimiste +35 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="33.8" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="95.6" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="33.8" cy="11.0" r="4"/><circle class="dot-pos" cx="95.6" cy="11.0" r="4"/><rect class="mid" x="73.5" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−25 / +15 / +35 %</td></tr><tr><td class="c-rank"><span class="pill b3">19</span></td><th scope="row" class="c-name"><a href="#r19">Qualcomm</a><span class="c-tick">QCOM</span></th><td class="cell h7">7</td><td class="cell h4">4</td><td class="cell h8">8</td><td class="cell h6">6</td><td class="cell h5">5</td><td class="c-total">6,25</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -20 %, central +12 %, optimiste +30 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="38.9" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="90.5" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="38.9" cy="11.0" r="4"/><circle class="dot-pos" cx="90.5" cy="11.0" r="4"/><rect class="mid" x="70.4" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−20 / +12 / +30 %</td></tr><tr><td class="c-rank"><span class="pill b3">20</span></td><th scope="row" class="c-name"><a href="#r20">Lumentum</a><span class="c-tick">LITE</span></th><td class="cell h7">7,5</td><td class="cell h9">9,5</td><td class="cell h3">3,5</td><td class="cell h4">4</td><td class="cell h7">7,5</td><td class="c-total">6,20</td><td class="c-scen"><svg class="scen" viewBox="0 0 150 22" width="150" height="22" role="img" aria-label="Scénarios : pessimiste -50 %, central +15 %, optimiste +60 %"><line class="zero" x1="59.5" x2="59.5" y1="2.0" y2="20.0"/><line class="span-neg" x1="8.0" x2="59.5" y1="11.0" y2="11.0"/><line class="span-pos" x1="59.5" x2="121.4" y1="11.0" y2="11.0"/><circle class="dot-neg" cx="8.0" cy="11.0" r="4"/><circle class="dot-pos" cx="121.4" cy="11.0" r="4"/><rect class="mid" x="73.5" y="4.0" width="3" height="14" rx="1"/></svg></td><td class="c-scen-t">−50 / +15 / +60 %</td></tr></tbody></table></div>
+<div class="legend" aria-hidden="false">
+<span class="lg"><span class="sw sw-h"></span>Score par critère : plus foncé = meilleur (10 = bon marché pour la valorisation, risque faible pour le risque)</span>
+<span class="lg"><svg width="14" height="14" viewBox="0 0 14 14"><circle class="dot-neg" cx="7" cy="7" r="4"/></svg>Scénario pessimiste</span>
+<span class="lg"><svg width="14" height="14" viewBox="0 0 14 14"><rect class="mid" x="5.5" y="1" width="3" height="12" rx="1"/></svg>Scénario central</span>
+<span class="lg"><svg width="14" height="14" viewBox="0 0 14 14"><circle class="dot-pos" cx="7" cy="7" r="4"/></svg>Scénario optimiste</span>
+</div>
+</section>
+
+
+<section class="bin" id="bin1" aria-labelledby="bin1-t">
+  <div class="bin-head">
+    <span class="bin-chip b1">BIN 1</span>
+    <h2 id="bin1-t">Conviction forte <span class="bin-range">n°1 à 4</span></h2>
+    <p>Franchises dominantes à prix raisonnable. Le cœur de l'exposition.</p>
+  </div>
+  
+<article class="card" id="r1">
+  <header class="card-head">
+    <div class="rank b1"><span class="rank-n">01</span><span class="rank-bin">BIN 1</span></div>
+    <div class="ident">
+      <h3>Broadcom</h3>
+      <div class="chips"><span class="tick">AVGO</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">ASIC IA sur mesure &amp; réseau Ethernet</p>
+    </div>
+    <div class="total"><span class="total-n">8,35</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 351 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 1,65 T$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 20x BPA 12 mois · &lt; 12x BPA 2028 visé</dd></div><div class="spec"><dt>Croissance</dt><dd>CA T3 +86 % · IA +221 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°1</span> Le meilleur couple croissance visible / prix du secteur. L'action est revenue à son niveau de fin 2025 alors que le BPA a progressé d'environ 43 %. Le marché a sanctionné un guidage T4 à peine sous le consensus et la concentration client. Payer moins de 12x un BPA 2028 que la direction voit au-dessus de 30 $, chez l'acteur qui conçoit les TPU de Google et les puces d'Anthropic et d'OpenAI, c'est l'asymétrie la plus nette de ce classement.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Chiffre d'affaires IA : 58 Md$ attendus sur l'exercice 2026, environ 115 Md$ en 2027 puis 230 Md$ en 2028 selon la direction. C'est un quadruplement en deux ans.</li><li>Six clients XPU (puces sur mesure), dont Google, Anthropic et OpenAI. Anthropic doit déployer 5 GW de TPU 8i en 2027 et OpenAI 1,3 GW de sa puce « Jalapeno ».</li><li>VMware apporte une base logicielle récurrente à forte marge qui finance dividende et rachats d'actions.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Concentration : six clients, dont deux laboratoires d'IA non cotés et consommateurs de cash. Broadcom monte des véhicules de financement (XPV) pour les aider, ce qui s'apparente à du financement fournisseur.</li><li>Le débat « Pace the Frontier » lancé par Dario Amodei le 12 septembre touche directement ses deux plus gros clients de 2027.</li><li>Guidage T4 (34,8 Md$) légèrement sous les attentes : un client qui décale son calendrier suffit à faire bouger un trimestre.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Duopole de fait sur l'ASIC IA de pointe, Marvell loin derrière : IP SerDes, packaging 3D, accès prioritaire aux capacités TSMC et co-conception pluriannuelle avec les clients. Leader des commutateurs Ethernet (Tomahawk, Jericho), qui gagnent du terrain sur InfiniBand.</p>
+      <h4>Moteurs de croissance</h4><p>Montée en puissance des TPU 8 (Google, Anthropic), nouveaux clients XPU, Ethernet scale-up et scale-out, optique co-packagée.</p>
+      <h4>Valorisation</h4><p>Environ 20x les bénéfices des 12 prochains mois et moins de 12x le BPA 2028 visé (plus de 30 $, contre 25,9 $ de consensus LSEG). C'est une décote par rapport à Nvidia pour une croissance IA attendue supérieure.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:100%"></span></span><span class="m-val">10</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −20 %, central +40 %, optimiste +80 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="78.2" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="312.0" y1="16" y2="16"/><circle class="dot-neg" cx="78.2" cy="16" r="4"/><circle class="dot-pos" cx="312.0" cy="16" r="4"/><rect class="mid" x="217.0" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −20 %</span> · <span>Central +40 %</span> · <span class="pos">Optimiste +80 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T4 FY26 (mi-décembre) · rampe TPU 8i · premiers volumes OpenAI en 2027</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r2">
+  <header class="card-head">
+    <div class="rank b1"><span class="rank-n">02</span><span class="rank-bin">BIN 1</span></div>
+    <div class="ident">
+      <h3>Nvidia</h3>
+      <div class="chips"><span class="tick">NVDA</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">GPU &amp; systèmes IA complets</p>
+    </div>
+    <div class="total"><span class="total-n">8,10</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 228 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 5,5 T$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 17-19x BPA 12 mois (plus bas depuis 2015)</dd></div><div class="spec"><dt>Croissance</dt><dd>CA T2 +106 % · FY28 guidé ≈ +70 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°2</span> La meilleure entreprise du secteur au multiple le plus bas depuis dix ans. Nvidia ne prend qu'environ 22 % en 2026 quand le SOX gagne 77 % : les bénéfices ont couru plus vite que le cours. La direction a donné pour la première fois un guidage annuel (+70 % de CA sur l'exercice 2028). Elle n'est pas n°1 parce que sa marge brute va baisser sous l'effet du coût de la mémoire et parce que les ASIC lui prennent des parts.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>T2 FY27 : 96,2 Md$ de CA (+106 %), dont 89 Md$ en data center. T3 guidé à 108 Md$ ±2 %.</li><li>Vera Rubin livré depuis août, environ 20 % du CA data center dès le T3. Rubin Ultra puis Feynman suivent au rythme d'une génération par an.</li><li>Plus de 80 % du marché des accélérateurs. La valeur se déplace de la puce vers le rack entier (NVLink, réseau, logiciel).</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Marge brute : 75 % au T2, 74 % guidé au T3, puis 71-72 % au T4 car le prix de la HBM s'envole. La direction situe le point bas à ce niveau.</li><li>Concurrence des ASIC (TPU 8, Trainium) : l'écosystème TPU a nettement surperformé en 2026.</li><li>Sur six hyperscalers, seul Microsoft devrait dégager un FCF positif en 2027 avec 1,3 T$ de capex cumulé. À 5,5 T$ de capitalisation, la marge d'erreur est faible.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>CUDA et près de 20 ans d'écosystème logiciel, NVLink/NVSwitch, réseau Spectrum-X et InfiniBand, intégration de systèmes complets. Avec une génération par an, aucun concurrent n'a le temps de rattraper toute la pile.</p>
+      <h4>Moteurs de croissance</h4><p>Rubin (HBM4), inférence agentique, IA souveraine, réseau, réouverture partielle de la Chine (H200 sous licence).</p>
+      <h4>Valorisation</h4><p>Environ 17-19x les bénéfices à 12 mois, contre une moyenne proche de 32x sur dix ans. Mon estimation indicative du BPA FY28 est de 14 à 15 $, soit environ 16x.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:100%"></span></span><span class="m-val">10</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −25 %, central +35 %, optimiste +65 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="66.5" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="276.9" y1="16" y2="16"/><circle class="dot-neg" cx="66.5" cy="16" r="4"/><circle class="dot-pos" cx="276.9" cy="16" r="4"/><rect class="mid" x="205.3" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −25 %</span> · <span>Central +35 %</span> · <span class="pos">Optimiste +65 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 FY27 (fin novembre) · rampe Rubin · licences Chine</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r3">
+  <header class="card-head">
+    <div class="rank b1"><span class="rank-n">03</span><span class="rank-bin">BIN 1</span></div>
+    <div class="ident">
+      <h3>TSMC</h3>
+      <div class="chips"><span class="tick">TSM</span><span class="venue">NYSE (ADR)</span><span class="tick">2330</span><span class="venue">Taïwan</span></div>
+      <p class="segment">Fonderie de pointe</p>
+    </div>
+    <div class="total"><span class="total-n">7,95</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 458 $ (ADR)</dd></div><div class="spec"><dt>Capitalisation</dt><dd>&gt; 2 T$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 22-24x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>CA 2026 &gt; +40 % · août +53 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°3</span> Le péage obligatoire de l'IA. GPU Nvidia, ASIC Broadcom, MI450 d'AMD, TPU de Google : tout passe par ses usines 3 nm et 2 nm. Détenir TSMC expose à l'IA sans devoir désigner le vainqueur entre GPU et ASIC. C'est le profil risque/rendement le plus propre du podium, avec un potentiel un peu plus faible et un risque Taïwan qui ne disparaîtra pas.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Croissance 2026 « légèrement supérieure à 40 % » en dollars. Au T2 : 40,2 Md$ de CA, 67,7 % de marge brute et 60,3 % de marge opérationnelle.</li><li>Le N2 entre au compte de résultat en 2026 et l'A16 (alimentation par la face arrière) arrive au S2 2026. Les nœuds de 7 nm et moins font 77 % du CA wafers.</li><li>Capex 2027 estimé entre 78 et 85 Md$ : la demande est contractualisée par les clients.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Géopolitique (Taïwan, Chine) : un risque extrême impossible à modéliser.</li><li>Marge brute du T3 guidée entre 65,5 et 67,5 %, diluée par la rampe N2 et les usines à l'étranger (Arizona, Japon).</li><li>Tarifs Section 232 : 25 % sur certaines puces avancées importées aux États-Unis.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Quasi-monopole sur les nœuds avancés et sur le packaging CoWoS. Pouvoir de fixation des prix démontré. Rendements industriels et confiance des clients que Samsung et Intel n'ont pas rattrapés.</p>
+      <h4>Moteurs de croissance</h4><p>N2/A16, CoWoS-L et SoIC, hausses de prix 2027, ASIC de tous les hyperscalers.</p>
+      <h4>Valorisation</h4><p>Environ 22-24x les bénéfices à 12 mois, soit un PEG proche de 1 pour la meilleure franchise industrielle du monde.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:100%"></span></span><span class="m-val">10</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:65%"></span></span><span class="m-val">6,5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −25 %, central +20 %, optimiste +45 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="66.5" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="230.2" y1="16" y2="16"/><circle class="dot-neg" cx="66.5" cy="16" r="4"/><circle class="dot-pos" cx="230.2" cy="16" r="4"/><rect class="mid" x="170.2" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −25 %</span> · <span>Central +20 %</span> · <span class="pos">Optimiste +45 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 (mi-octobre) · CA mensuels · prix 2027 · rampe N2/A16</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r4">
+  <header class="card-head">
+    <div class="rank b1"><span class="rank-n">04</span><span class="rank-bin">BIN 1</span></div>
+    <div class="ident">
+      <h3>ASML</h3>
+      <div class="chips"><span class="tick">ASML</span><span class="venue">Euronext Amsterdam</span><span class="tick">ASML</span><span class="venue">Nasdaq</span><span class="pea" title="Coté en Europe : logeable dans un PEA">PEA</span></div>
+      <p class="segment">Lithographie EUV</p>
+    </div>
+    <div class="total"><span class="total-n">7,60</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 1 834 $ (ADR)</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 710 Md$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 29-33x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>CA 2026 guidé 43-45 Md€ (≈ +35 %)</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°4</span> Le seul monopole absolu de la chaîne : sans EUV, pas de puce avancée. La demande 2027 en EUV low-NA est presque entièrement couverte, la mémoire vit une « tempête parfaite » (+75 % de ventes de systèmes mémoire en 2026) et le multiple reste dans le bas de sa fourchette historique. C'est aussi le meilleur candidat du classement pour un PEA.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Guidage 2026 relevé entre 43 et 45 Md€, avec une marge brute de 54 à 56 %.</li><li>Low-NA EUV quasi complet pour 2027. Contrats High-NA signés, avec environ 40 % de performance en plus.</li><li>Le marché des équipements (WFE) est attendu autour de 190 à 210 Md$ en 2027 (KLA, BofA), soit +25 à 35 %.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Chine : normalisation des ventes et durcissement possible des contrôles à l'export.</li><li>Forte sensibilité au sentiment : −7,3 % le 14 septembre.</li><li>Le calendrier d'adoption du High-NA reste incertain chez certains clients.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Monopole mondial de l'EUV, chaîne d'approvisionnement unique (optique Zeiss, sources Cymer), décennies de R&amp;D. Aucun concurrent crédible avant la fin de la décennie. La base installée génère de plus en plus de revenus de service.</p>
+      <h4>Moteurs de croissance</h4><p>Cycle DRAM/HBM, N2/A16, adoption du High-NA (14A, DRAM 1d), intensité EUV par wafer en hausse.</p>
+      <h4>Valorisation</h4><p>Environ 29-33x les bénéfices à 12 mois. La prime est justifiée par le monopole et reste modérée dans l'historique d'ASML.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:100%"></span></span><span class="m-val">10</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −25 %, central +20 %, optimiste +45 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="66.5" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="230.2" y1="16" y2="16"/><circle class="dot-neg" cx="66.5" cy="16" r="4"/><circle class="dot-pos" cx="230.2" cy="16" r="4"/><rect class="mid" x="170.2" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −25 %</span> · <span>Central +20 %</span> · <span class="pos">Optimiste +45 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 et prises de commandes (mi-octobre) · premières indications 2027</p>
+    </section>
+  </div>
+</article>
+</section>
+<section class="bin" id="bin2" aria-labelledby="bin2-t">
+  <div class="bin-head">
+    <span class="bin-chip b2">BIN 2</span>
+    <h2 id="bin2-t">Achat <span class="bin-range">n°5 à 12</span></h2>
+    <p>Fort potentiel avec un risque identifié : cycle mémoire, concentration client ou valorisation. À calibrer en taille.</p>
+  </div>
+  
+<article class="card" id="r5">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">05</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>Samsung Electronics</h3>
+      <div class="chips"><span class="tick">005930</span><span class="venue">Séoul</span><span class="tick">SMSN</span><span class="venue">GDR Londres</span></div>
+      <p class="segment">Mémoire (DRAM, HBM, NAND) &amp; fonderie</p>
+    </div>
+    <div class="total"><span class="total-n">7,38</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 269 500 ₩</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 1,2 T$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 4-5x BPA 2027e</dd></div><div class="spec"><dt>Croissance</dt><dd>RO 2027e 440-490 T₩</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°5</span> La grande capitalisation la moins chère du secteur, au moment où sa dynamique s'améliore. Samsung reprend des parts en HBM4 face à SK hynix (certifié sur Nvidia Rubin, premier à livrer des échantillons HBM4E) et sa fonderie se redresse grâce au contrat Tesla 2 nm de 16,5 Md$. Elle est classée haut malgré le cycle parce que la décote absorbe déjà une bonne partie du risque de retournement.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Résultat opérationnel 2027 attendu entre 438 T₩ (Goldman Sachs) et 493 T₩ (SK Securities). Goldman voit encore 495 T₩ en 2028.</li><li>Production de masse de la HBM4 depuis février 2026 et rendements en hausse. LS Securities relève son objectif à 450 000 ₩ (+67 %) et baisse celui de SK hynix.</li><li>Le die de base HBM4 en 4 nm remplit la fonderie. Le contrat Tesla AI6 en 2 nm (Taylor, Texas) court jusqu'en 2033.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Cycle : Morgan Stanley situe le pic en 2027. Le capex DRAM grimpe de 52 % en 2027 et fera arriver de l'offre en 2028.</li><li>Décote coréenne, gouvernance, change du won.</li><li>La fonderie reste déficitaire, avec un objectif de rentabilité annuelle en 2028.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Premier producteur mondial de DRAM et de NAND, en capacité comme en bilan. Intégration verticale (mémoire, fonderie, packaging) : seul acteur capable de fournir la HBM et son die logique au même endroit.</p>
+      <h4>Moteurs de croissance</h4><p>HBM4/HBM4E, DRAM serveur, NAND QLC entreprise, fonderie 2 nm, dividende en hausse.</p>
+      <h4>Valorisation</h4><p>Environ 4-5x les bénéfices 2027 estimés. Même si les profits de la mémoire étaient divisés par deux en 2028-29, le titre resterait proche de 10x.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:85%"></span></span><span class="m-val">8,5</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:95%"></span></span><span class="m-val">9,5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:40%"></span></span><span class="m-val">4</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −35 %, central +35 %, optimiste +70 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="43.1" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="288.6" y1="16" y2="16"/><circle class="dot-neg" cx="43.1" cy="16" r="4"/><circle class="dot-pos" cx="288.6" cy="16" r="4"/><rect class="mid" x="205.3" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −35 %</span> · <span>Central +35 %</span> · <span class="pos">Optimiste +70 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats préliminaires T3 (début octobre) · parts HBM4 chez Nvidia · rampe Tesla</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r6">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">06</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>Credo Technology</h3>
+      <div class="chips"><span class="tick">CRDO</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Connectivité IA (câbles AEC, DSP optiques, retimers)</p>
+    </div>
+    <div class="total"><span class="total-n">7,33</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 195 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 37 Md$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 26x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>CA +115 % · FY27 &gt; +85 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°6</span> Le meilleur ratio croissance/prix de la connectivité IA. Credo croît de plus de 85 % avec 49 % de marge nette pour environ 26x les bénéfices attendus (PEG ≈ 0,3), quand Astera Labs, comparable, se paie environ 115x. Sa 6e place tient compte d'une volatilité extrême et d'une concentration client qu'il faut accepter.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>T1 FY27 : 479 M$ de CA (+115 %), 68 % de marge brute non-GAAP, 236 M$ de bénéfice net. Septième trimestre consécutif de croissance à trois chiffres.</li><li>T2 guidé entre 525 et 535 M$. Plus de 600 M$ de revenus optiques visés sur l'exercice.</li><li>Les câbles électriques actifs (AEC) remplacent le cuivre passif dans les racks IA en 800G et 1,6T. Diversification vers les DSP optiques et les retimers.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Concentration : quelques hyperscalers font l'essentiel du CA.</li><li>Technologie : à long terme, l'optique co-packagée (CPO) peut réduire la place du cuivre.</li><li>Concurrence de Marvell, Broadcom, Astera et de fabricants chinois d'AEC. Le titre bouge souvent de plus de 10 % en une séance.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>IP SerDes très basse consommation et conception système des câbles actifs, avec deux à trois ans d'avance chez quatre hyperscalers. Moat réel mais moins profond que celui des leaders du top 5.</p>
+      <h4>Moteurs de croissance</h4><p>AEC 1,6T, nouvelles néoclouds, DSP optiques, retimers PCIe/UALink.</p>
+      <h4>Valorisation</h4><p>Environ 26x les bénéfices à 12 mois pour une croissance de plus de 85 %. Objectif moyen des analystes autour de 280 $ (+44 %).</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:100%"></span></span><span class="m-val">10</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:45%"></span></span><span class="m-val">4,5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −45 %, central +30 %, optimiste +80 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="19.7" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="312.0" y1="16" y2="16"/><circle class="dot-neg" cx="19.7" cy="16" r="4"/><circle class="dot-pos" cx="312.0" cy="16" r="4"/><rect class="mid" x="193.6" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −45 %</span> · <span>Central +30 %</span> · <span class="pos">Optimiste +80 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T2 FY27 (début décembre) · gains de clients · produits 1,6T</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r7">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">07</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>Lam Research</h3>
+      <div class="chips"><span class="tick">LRCX</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Équipement de gravure &amp; dépôt</p>
+    </div>
+    <div class="total"><span class="total-n">7,28</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 315 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 400 Md$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 33x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>CA +30 % · T+1 guidé 8,1 Md$</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°7</span> Le plus fort levier sur le cycle d'équipement 2027, que la direction qualifie d'« extraordinaire ». La NAND repart avec la conversion vers plus de 200 couches, la DRAM explose et le GAA augmente l'intensité de gravure et de dépôt. Le trimestre suivant est guidé à +20 % en séquentiel. Lam est classé sous ASML parce qu'il est plus cher que son historique et plus cyclique.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>T4 FY26 : 6,72 Md$ de CA (+30 %), marge brute de 52 % et marge opérationnelle de 38,4 %, toutes deux en hausse.</li><li>Le CA NAND a plus que doublé en un trimestre. Le marché adressable par wafer NAND double entre 128 couches et plus de 500 couches.</li><li>WFE 2026 au bas de la zone des 150 Md$, croissance plus forte attendue en 2027. Objectif : une part du WFE dans le haut de la fourchette des 30 %.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Valorisation proche des plus hauts historiques pour un acteur cyclique.</li><li>Exposition à la Chine et aux règles d'export américaines.</li><li>Un retournement du capex mémoire en 2028 toucherait Lam en premier.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Leader mondial de la gravure à haut rapport de forme (NAND 3D, TSV de la HBM) et du dépôt conducteur. Base installée énorme qui nourrit un service client record trois trimestres de suite.</p>
+      <h4>Moteurs de croissance</h4><p>Mises à niveau NAND, DRAM 1c/HBM4, GAA, alimentation par la face arrière, packaging avancé.</p>
+      <h4>Valorisation</h4><p>Environ 33x les bénéfices à 12 mois, soit 45 % au-dessus de la médiane du secteur. Le cycle 2027 doit se confirmer.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:85%"></span></span><span class="m-val">8,5</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:50%"></span></span><span class="m-val">5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −30 %, central +18 %, optimiste +45 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="54.8" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="230.2" y1="16" y2="16"/><circle class="dot-neg" cx="54.8" cy="16" r="4"/><circle class="dot-pos" cx="230.2" cy="16" r="4"/><rect class="mid" x="165.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −30 %</span> · <span>Central +18 %</span> · <span class="pos">Optimiste +45 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T1 FY27 (fin octobre) · budgets WFE 2027 · capex mémoire</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r8">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">08</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>Analog Devices</h3>
+      <div class="chips"><span class="tick">ADI</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Analogique &amp; signaux mixtes haut de gamme</p>
+    </div>
+    <div class="total"><span class="total-n">7,25</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 394 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 195 Md$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 25x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>CA T3 +40 % · MB 72,5 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°8</span> La qualité défensive du classement. Le cycle analogique repart à peine, ADI affiche +40 % de croissance et 72,5 % de marge brute, tirée par l'industrie et le data center (alimentation, optique, test). Le potentiel est moins spectaculaire, mais le risque de baisse est le plus faible du top 10.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>T3 FY26 : CA supérieur à 4 Md$ (+40 %), BPA ajusté de 3,45 $ (+68 %), marge brute de 72,5 % (+330 pb).</li><li>T4 guidé à environ 4,3 Md$ de CA et 3,86 $ de BPA, avec une dynamique large.</li><li>Exposition croissante à l'IA : gestion d'énergie des racks, équipements de test, interfaces optiques.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Une partie de la croissance vient de la reconstitution des stocks clients et ralentira en 2027.</li><li>Marge de FCF déjà proche de son plafond (environ 38 %).</li><li>Sensibilité au cycle industriel mondial et à la Chine.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Catalogue de dizaines de milliers de références aux cycles de vie de 10 à 20 ans, clients industriels captifs, production hybride interne et externe. L'une des meilleures franchises de l'analogique.</p>
+      <h4>Moteurs de croissance</h4><p>Reprise industrielle (automatisation, aéronautique), data center, automobile (gestion des batteries, audio), santé.</p>
+      <h4>Valorisation</h4><p>Environ 25x les bénéfices à 12 mois, raisonnable pour une marge brute supérieure à 70 % en début de cycle.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:65%"></span></span><span class="m-val">6,5</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −20 %, central +15 %, optimiste +32 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="78.2" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="199.8" y1="16" y2="16"/><circle class="dot-neg" cx="78.2" cy="16" r="4"/><circle class="dot-pos" cx="199.8" cy="16" r="4"/><rect class="mid" x="158.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −20 %</span> · <span>Central +15 %</span> · <span class="pos">Optimiste +32 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T4 FY26 (fin novembre) · guidage 2027</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r9">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">09</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>Micron Technology</h3>
+      <div class="chips"><span class="tick">MU</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Mémoire (DRAM, HBM, NAND)</p>
+    </div>
+    <div class="total"><span class="total-n">7,05</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 1 060 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 1,19 T$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 7x BPA annualisé guidé · 14x passé</dd></div><div class="spec"><dt>Croissance</dt><dd>CA T4 +379 % · MB 87 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°9</span> Le seul grand mémoriste américain sort d'un trimestre historique : 54,2 Md$ de CA et un T1 guidé à 61,5 Md$ pour 38,15 $ de BPA. Les volumes HBM 2027 sont déjà vendus, avec des hausses de prix. À environ 7x le BPA annualisé, le marché anticipe un retournement brutal. Le titre a pris 284 % en 2026 et 87 % de marge est un sommet de cycle, d'où un rang inférieur à Samsung.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Exercice 2026 : 133 Md$ de CA (+256 %) et 74,33 $ de BPA GAAP.</li><li>La majorité des bits HBM 2027 est contractualisée avec des hausses de prix, ce qui réduit l'écart de marge avec la DRAM classique.</li><li>Seul producteur américain de DRAM : il profite du CHIPS Act et de la relocalisation (Idaho, New York).</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>87 % de marge brute : un plus haut de cycle presque par définition.</li><li>Hausse du capex de toute l'industrie (+46 % attendu en 2027) et nouvelle offre en 2028.</li><li>+500 % en un an : le titre a baissé au lendemain d'un trimestre record, signe de prises de bénéfices.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Oligopole à trois sur la DRAM, technologie 1γ compétitive, qualifié HBM4 chez Nvidia. Moat plus faible qu'un monopole : le produit est cyclique et en partie banalisé.</p>
+      <h4>Moteurs de croissance</h4><p>HBM4/4E, DRAM serveur (LPDDR5X pour CPU IA), SSD entreprise.</p>
+      <h4>Valorisation</h4><p>Environ 7x le BPA annualisé du T1 guidé et 14x les bénéfices passés. Bon marché si le cycle tient jusqu'en 2027, classique d'un sommet s'il casse.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:35%"></span></span><span class="m-val">3,5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −45 %, central +20 %, optimiste +60 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="19.7" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="265.2" y1="16" y2="16"/><circle class="dot-neg" cx="19.7" cy="16" r="4"/><circle class="dot-pos" cx="265.2" cy="16" r="4"/><rect class="mid" x="170.2" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −45 %</span> · <span>Central +20 %</span> · <span class="pos">Optimiste +60 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Prix contractuels DRAM du T4 · négociations HBM 2028 · résultats T1 FY27 (fin décembre)</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r10">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">10</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>SK hynix</h3>
+      <div class="chips"><span class="tick">000660</span><span class="venue">Séoul</span><span class="tick">SKHY</span><span class="venue">Nasdaq (ADR)</span></div>
+      <p class="segment">Mémoire HBM (leader)</p>
+    </div>
+    <div class="total"><span class="total-n">7,03</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 1 779 000 ₩</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 0,9 T$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 4-6x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>Part de marché HBM 50-55 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°10</span> Le leader historique de la HBM, accessible en direct via l'ADR SKHY sur le Nasdaq depuis juillet, pour environ 5x les bénéfices attendus. Il est classé sous Samsung parce que la dynamique s'inverse : perte de parts en HBM4, objectif abaissé de 27 % par LS Securities, environ −9 % sur un mois.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Plus de la moitié de la HBM mondiale et premier fournisseur historique de Nvidia.</li><li>La HBM4 se vend environ 31-32 $/Go, près du double de la HBM3E : le mix s'enrichit.</li><li>Consensus de BPA 2027 autour de 470 000 ₩, soit moins de 4x les bénéfices.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Perte de la prime de fournisseur unique : la part HBM4 glisse vers Samsung.</li><li>Cycle mémoire, nouvelle offre en 2028, forte dépendance à Nvidia.</li><li>L'ADR de 26,5 Md$ a créé une offre de titres supplémentaire.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Avance en empilement HBM (MR-MUF), relation privilégiée avec Nvidia, rendements supérieurs. Ce moat s'érode à mesure que Samsung et Micron rattrapent leur retard.</p>
+      <h4>Moteurs de croissance</h4><p>HBM4/HBM4E, DRAM serveur, NAND Solidigm (SSD entreprise).</p>
+      <h4>Valorisation</h4><p>Environ 4-6x les bénéfices à 12 mois : un niveau de sommet de cycle, avec une visibilité 2027 sans précédent.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:35%"></span></span><span class="m-val">3,5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −45 %, central +25 %, optimiste +65 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="19.7" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="276.9" y1="16" y2="16"/><circle class="dot-neg" cx="19.7" cy="16" r="4"/><circle class="dot-pos" cx="276.9" cy="16" r="4"/><rect class="mid" x="181.9" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −45 %</span> · <span>Central +25 %</span> · <span class="pos">Optimiste +65 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 (fin octobre) · allocations HBM4 2027 · prix DRAM</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r11">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">11</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>Applied Materials</h3>
+      <div class="chips"><span class="tick">AMAT</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Équipement (dépôt, implantation, CMP, inspection)</p>
+    </div>
+    <div class="total"><span class="total-n">7,00</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 485 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 385 Md$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 26x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>Marché équipement 2026 &gt; +30 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°11</span> Le grand équipementier américain le moins cher (environ 26x, contre 33-36x pour Lam et KLA) et le portefeuille le plus large pour profiter du WFE 2027. Le titre a déçu en août et n'a pas suivi ses pairs, ce qui crée un point d'entrée. Il est classé sous Lam car moins exposé à la reprise NAND et plus dépendant de la Chine.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>La direction relève la croissance 2026 de son marché équipement au-delà de 30 %.</li><li>Leader de la science des matériaux : épitaxie GAA, alimentation par la face arrière, hybrid bonding, DRAM 4F².</li><li>Activité de service (AGS) récurrente, environ un quart du CA.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Part de la Chine dans le CA et extension des listes d'entités américaines.</li><li>Moins exposé que Lam à la reprise NAND.</li><li>Le guidage d'août a déçu : l'exécution trimestrielle doit rassurer.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Largeur de portefeuille sans équivalent (plus de 15 étapes de procédé), co-optimisation avec les clients, base installée géante.</p>
+      <h4>Moteurs de croissance</h4><p>GAA 2 nm, DRAM/HBM, packaging avancé, inspection e-beam.</p>
+      <h4>Valorisation</h4><p>Environ 26x les bénéfices à 12 mois. Morningstar le jugeait à sa juste valeur avant la hausse des estimations WFE 2027.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:65%"></span></span><span class="m-val">6,5</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −25 %, central +18 %, optimiste +40 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="66.5" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="218.5" y1="16" y2="16"/><circle class="dot-neg" cx="66.5" cy="16" r="4"/><circle class="dot-pos" cx="218.5" cy="16" r="4"/><rect class="mid" x="165.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −25 %</span> · <span>Central +18 %</span> · <span class="pos">Optimiste +40 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T4 FY26 (mi-novembre) · perspectives WFE 2027</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r12">
+  <header class="card-head">
+    <div class="rank b2"><span class="rank-n">12</span><span class="rank-bin">BIN 2</span></div>
+    <div class="ident">
+      <h3>NXP Semiconductors</h3>
+      <div class="chips"><span class="tick">NXPI</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Automobile &amp; industriel (MCU, radar, connectivité)</p>
+    </div>
+    <div class="total"><span class="total-n">6,95</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 227 $ (début sept.)</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 57 Md$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 12-15x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>CA T2 +19 % · T3 guidé 3,75 Md$</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°12</span> La décote la plus forte du classement hors mémoire. NXP se paie 12-15x alors que la reprise automobile et industrielle est en marche (+19 %, T3 encore en hausse), que la voiture définie par logiciel augmente le contenu par véhicule et que la direction affiche des objectifs 2030 ambitieux. C'est un pari de rattrapage peu lié à l'IA, utile pour diversifier.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>T2 2026 record : 3,5 Md$ (+19 %) et des marges en hausse sur tous les segments.</li><li>T3 guidé à 3,75 Md$ ±100 M$ avec un BPA ajusté de 4,11 $ : la croissance reste à deux chiffres.</li><li>Calculateurs zonaux S32, radar 4D, UWB et IA embarquée (« physical AI »).</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>La reprise automobile peut être plus lente qu'attendu, surtout en Europe et en Chine.</li><li>Concurrence chinoise sur les MCU d'entrée de gamme.</li><li>Peu de leviers IA : le titre peut rester délaissé tant que le marché ne regarde que l'IA.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Numéro un des semi-conducteurs automobiles hors puissance. Des qualifications de 5 à 7 ans verrouillent les plateformes. Écosystème logiciel S32 et relations profondes avec les constructeurs.</p>
+      <h4>Moteurs de croissance</h4><p>Voiture définie par logiciel, radar, électrification, edge AI industriel, objectifs 2030.</p>
+      <h4>Valorisation</h4><p>Environ 12-15x les bénéfices à 12 mois, contre environ 36x pour son industrie selon Zacks. Le PER le plus bas parmi les valeurs de qualité de ce top.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:55%"></span></span><span class="m-val">5,5</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:85%"></span></span><span class="m-val">8,5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:65%"></span></span><span class="m-val">6,5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:55%"></span></span><span class="m-val">5,5</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −20 %, central +22 %, optimiste +42 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="78.2" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="223.1" y1="16" y2="16"/><circle class="dot-neg" cx="78.2" cy="16" r="4"/><circle class="dot-pos" cx="223.1" cy="16" r="4"/><rect class="mid" x="174.9" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −20 %</span> · <span>Central +22 %</span> · <span class="pos">Optimiste +42 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 (fin octobre) · guidage T4 · commandes auto 2027</p>
+    </section>
+  </div>
+</article>
+</section>
+<section class="bin" id="bin3" aria-labelledby="bin3-t">
+  <div class="bin-head">
+    <span class="bin-chip b3">BIN 3</span>
+    <h2 id="bin3-t">Achat sélectif <span class="bin-range">n°13 à 20</span></h2>
+    <p>Bonnes entreprises dont le prix intègre déjà beaucoup, ou paris plus spéculatifs. À acheter sur repli ou en lignes satellites.</p>
+  </div>
+  
+<article class="card" id="r13">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">13</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>KLA</h3>
+      <div class="chips"><span class="tick">KLAC</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Contrôle de procédé &amp; métrologie</p>
+    </div>
+    <div class="total"><span class="total-n">6,90</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 189 $ (après division 10:1)</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 250 Md$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 34-36x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>S2 2026 ≈ +20 % vs S1</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°13</span> La meilleure qualité financière de tout l'équipement : plus de la moitié du contrôle de procédé et les marges les plus élevées. Chaque nouveau nœud et chaque pile HBM demandent plus d'inspection. KLA n'est que 13e parce qu'à 34-36x, le prix intègre déjà une bonne partie de cette excellence.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>WFE 2026 relevé dans le bas de la zone des 150 Md$ et scénario de travail du secteur proche de 190 Md$ en 2027.</li><li>Croissance du S2 2026 d'environ 20 % par rapport au S1, avec des gains de parts continus.</li><li>Packaging avancé et substrats haute densité ouvrent de nouveaux marchés d'inspection.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Valorisation : Morgan Stanley a déjà dégradé la valeur sur des critères relatifs.</li><li>Exposition à la Chine.</li><li>Un ralentissement du WFE en 2028 comprimerait le multiple.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Position dominante en inspection et métrologie, bases de données de défauts accumulées sur des décennies, logiciels propriétaires. Le meilleur moat de l'équipement après ASML.</p>
+      <h4>Moteurs de croissance</h4><p>Inspection sous 2 nm, HBM, packaging avancé, service.</p>
+      <h4>Valorisation</h4><p>Environ 34-36x les bénéfices à 12 mois : le multiple premium laisse peu de marge d'erreur.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:100%"></span></span><span class="m-val">10</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:40%"></span></span><span class="m-val">4</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −25 %, central +12 %, optimiste +30 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="66.5" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="195.1" y1="16" y2="16"/><circle class="dot-neg" cx="66.5" cy="16" r="4"/><circle class="dot-pos" cx="195.1" cy="16" r="4"/><rect class="mid" x="151.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −25 %</span> · <span>Central +12 %</span> · <span class="pos">Optimiste +30 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T1 FY27 (fin octobre) · WFE 2027</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r14">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">14</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>Advantest</h3>
+      <div class="chips"><span class="tick">6857</span><span class="venue">Tokyo</span><span class="tick">ATEYY</span><span class="venue">OTC (ADR)</span></div>
+      <p class="segment">Testeurs de puces (SoC &amp; mémoire)</p>
+    </div>
+    <div class="total"><span class="total-n">6,85</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 32 000 ¥ (+8 % le 1er oct.)</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 24,8 T¥ (≈ 165 Md$)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 29x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>RO FY26 guidé +69,5 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°14</span> Le quasi-monopole du test des puces IA. Chaque GPU, ASIC ou pile HBM passe plus de temps sur testeur à chaque génération : puces plus grosses, chiplets plus nombreux, exigences de fiabilité plus fortes. La croissance est exceptionnelle, mais le titre a déjà été multiplié plusieurs fois et réagit violemment au moindre guidage prudent.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Résultat opérationnel FY26 relevé à 846 Md¥ (+69,5 %). Testeurs SoC à 1 243,5 Md¥ (+62 %).</li><li>La demande de test pour l'inférence IA dépasse les projections d'avril de la société.</li><li>Environ 70 % du marché mondial du test SoC et leader du test mémoire HBM.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Guidages prudents : le titre a chuté en mai sur des perspectives jugées timides.</li><li>Très forte dépendance à Nvidia et aux ASIC IA.</li><li>Change du yen, et accès plus complexe pour un particulier.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>La plateforme V93000 est le standard de l'industrie. Les programmes de test écrits par les clients rendent le changement de fournisseur très coûteux. Duopole avec Teradyne.</p>
+      <h4>Moteurs de croissance</h4><p>Test des GPU et ASIC, HBM4, chiplets, test système (SLT), burn-in.</p>
+      <h4>Valorisation</h4><p>Environ 29x les bénéfices à 12 mois, raisonnable au regard de la croissance. Le PER passé dépasse 60x.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:50%"></span></span><span class="m-val">5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:50%"></span></span><span class="m-val">5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −35 %, central +15 %, optimiste +40 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="43.1" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="218.5" y1="16" y2="16"/><circle class="dot-neg" cx="43.1" cy="16" r="4"/><circle class="dot-pos" cx="218.5" cy="16" r="4"/><rect class="mid" x="158.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −35 %</span> · <span>Central +15 %</span> · <span class="pos">Optimiste +40 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats S1 FY26 (fin octobre) · commandes de testeurs Rubin et TPU</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r15">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">15</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>AMD</h3>
+      <div class="chips"><span class="tick">AMD</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">GPU &amp; CPU data center (MI450, EPYC)</p>
+    </div>
+    <div class="total"><span class="total-n">6,78</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 607 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 1 T$</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 39x BPA 2027e (consensus 15,6 $)</dd></div><div class="spec"><dt>Croissance</dt><dd>CA T2 +50 % · data center +107 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°15</span> La plus forte trajectoire de croissance des grandes capitalisations : 6 GW engagés par OpenAI, 6 GW par Meta, 2 GW par Anthropic, des racks Helios qui livrent, et environ 70 Md$ de CA data center visés en 2027. Mais le titre a pris près de 300 % en un an et se paie environ 39x les bénéfices 2027 du consensus. Une grande partie du succès est déjà dans le prix, d'où la 15e place.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>T2 2026 : 11,5 Md$ de CA (+50 %) et 6,7 Md$ en data center (+107 %).</li><li>Le CA data center doit plus que doubler en 2027 grâce aux MI450, à Helios et aux EPYC Venice.</li><li>Consensus de BPA 2027 relevé de 13,10 $ à 15,57 $ en 90 jours (33 révisions à la hausse pour 3 à la baisse).</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Exécution de contrats à l'échelle du gigawatt et dépendance aux financements d'OpenAI, à qui AMD a accordé des bons de souscription.</li><li>Nvidia peut défendre ses prix grâce à son avance logicielle et réseau.</li><li>Multiple tendu : −4,4 % le 14 septembre.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Seule alternative complète et crédible à Nvidia en GPU, avec un logiciel ROCm qui progresse. Leader du CPU serveur x86 face à Intel. Expertise en chiplets et packaging.</p>
+      <h4>Moteurs de croissance</h4><p>MI450/MI500, racks Helios, EPYC Venice, PC IA.</p>
+      <h4>Valorisation</h4><p>Environ 39x les bénéfices 2027 du consensus, environ 30x avec l'objectif de BPA supérieur à 20 $. Cher face à Nvidia (17-19x).</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:100%"></span></span><span class="m-val">10</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:40%"></span></span><span class="m-val">4</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:50%"></span></span><span class="m-val">5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −40 %, central +15 %, optimiste +50 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="31.4" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="241.8" y1="16" y2="16"/><circle class="dot-neg" cx="31.4" cy="16" r="4"/><circle class="dot-pos" cx="241.8" cy="16" r="4"/><rect class="mid" x="158.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −40 %</span> · <span>Central +15 %</span> · <span class="pos">Optimiste +50 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 (début novembre) · premiers déploiements MI450 à l'échelle du gigawatt</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r16">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">16</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>Texas Instruments</h3>
+      <div class="chips"><span class="tick">TXN</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Analogique &amp; processeurs embarqués (300 mm)</p>
+    </div>
+    <div class="total"><span class="total-n">6,67</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 278 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 253 Md$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 27x BPA 12 mois (est.)</dd></div><div class="spec"><dt>Croissance</dt><dd>Industriel +30 % · data center ×2</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°16</span> Le meilleur levier sur la fin du cycle d'investissement. Après des années de capex massif dans des usines 300 mm, le capex baisse et le free cash-flow remonte vite : 6,5 Md$ sur 12 mois contre 1,8 Md$ un an plus tôt, et plus de 8 $ par action visés. TI est classé plus bas parce que sa hausse de 55 à 64 % en 2026 intègre déjà une partie de la reprise.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Industriel +30 %, data center doublé : la reprise analogique « ne fait que commencer ».</li><li>T3 guidé entre 5,65 et 6,15 Md$ de CA et entre 2,23 et 2,57 $ de BPA.</li><li>Production interne en 300 mm : un avantage de coût par puce net face aux concurrents en 200 mm.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>La reprise est déjà largement intégrée dans le cours.</li><li>Concurrence chinoise sur l'analogique standard.</li><li>La sous-utilisation des nouvelles usines pèse sur la marge si la demande ralentit.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Le plus large catalogue analogique (plus de 80 000 références), production interne en 300 mm et vente directe. La meilleure structure de coûts du secteur.</p>
+      <h4>Moteurs de croissance</h4><p>Reprise industrielle et automobile, alimentation des data centers, retour de cash à l'actionnaire.</p>
+      <h4>Valorisation</h4><p>Environ 27x les bénéfices à 12 mois (estimation) et environ 3 % de rendement FCF. Dividende solide.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:85%"></span></span><span class="m-val">8,5</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:50%"></span></span><span class="m-val">5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −20 %, central +12 %, optimiste +30 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="78.2" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="195.1" y1="16" y2="16"/><circle class="dot-neg" cx="78.2" cy="16" r="4"/><circle class="dot-pos" cx="195.1" cy="16" r="4"/><rect class="mid" x="151.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −20 %</span> · <span>Central +12 %</span> · <span class="pos">Optimiste +30 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 (fin octobre) · guidage T4 · capex 2027</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r17">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">17</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>ASM International</h3>
+      <div class="chips"><span class="tick">ASM</span><span class="venue">Euronext Amsterdam</span><span class="pea" title="Coté en Europe : logeable dans un PEA">PEA</span></div>
+      <p class="segment">Dépôt ALD &amp; épitaxie</p>
+    </div>
+    <div class="total"><span class="total-n">6,55</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 814 € (18 sept.)</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 40 Md€ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 80x FCF · objectif moyen 1 126 €</dd></div><div class="spec"><dt>Croissance</dt><dd>Contenu ALD en hausse avec le GAA</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°17</span> Le leader du dépôt de couches atomiques (ALD), procédé indispensable au GAA, à l'alimentation par la face arrière et à la DRAM 3D. Son contenu par wafer augmente à chaque transition. La valorisation exigeante et des commandes trimestrielles irrégulières le placent en bas du classement, malgré un objectif moyen des analystes à +38 %.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Le passage au GAA (TSMC N2, Intel 18A, Samsung SF2) multiplie les étapes ALD et d'épitaxie.</li><li>BofA vise 1 457 € (achat). La moyenne des analystes est de 1 126 €.</li><li>Rachats d'actions en cours et bilan sans dette.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Commandes trimestrielles volatiles et visibilité faible.</li><li>Exposition à la Chine, dont la normalisation est attendue.</li><li>Multiple élevé dans un environnement de taux en hausse.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Plus de la moitié du marché de l'ALD mono-wafer. Savoir-faire en chimie des précurseurs et en contrôle à l'échelle atomique, co-développement avec TSMC et Intel.</p>
+      <h4>Moteurs de croissance</h4><p>GAA 2 nm/A16, alimentation par la face arrière, DRAM, épitaxie SiC.</p>
+      <h4>Valorisation</h4><p>Environ 80x le FCF selon Convequity : c'est cher et cela suppose plusieurs années de forte croissance.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:90%"></span></span><span class="m-val">9</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:40%"></span></span><span class="m-val">4</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −30 %, central +20 %, optimiste +45 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="54.8" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="230.2" y1="16" y2="16"/><circle class="dot-neg" cx="54.8" cy="16" r="4"/><circle class="dot-pos" cx="230.2" cy="16" r="4"/><rect class="mid" x="170.2" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −30 %</span> · <span>Central +20 %</span> · <span class="pos">Optimiste +45 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T3 (fin octobre) · commandes GAA 2027</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r18">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">18</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>Infineon</h3>
+      <div class="chips"><span class="tick">IFX</span><span class="venue">Xetra</span><span class="pea" title="Coté en Europe : logeable dans un PEA">PEA</span></div>
+      <p class="segment">Semi-conducteurs de puissance (Si, SiC, GaN)</p>
+    </div>
+    <div class="total"><span class="total-n">6,45</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 60 €</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 78 Md€ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 25x BPA 12 mois (est.)</dd></div><div class="spec"><dt>Croissance</dt><dd>IA data center FY27 &gt; 2,5 Md€</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°18</span> Le numéro un mondial de la puissance profite de deux moteurs à la fois. Les data centers IA basculent vers l'alimentation 800 V en courant continu, ce qui multiplie le contenu par rack, et l'automobile se redresse. Les hausses de prix annoncées montrent un pouvoir de fixation retrouvé. Bonne option pour un PEA, mais la croissance du groupe reste modérée (+11 % sur l'exercice 2026).</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>CA IA data center supérieur à 1,6 Md€ sur l'exercice 2026 (plus du double) et visé au-delà de 2,5 Md€ sur l'exercice 2027.</li><li>CA trimestriel de nouveau au-dessus de 4 Md€ et FCF ajusté relevé à environ 1,65 Md€.</li><li>Hausses de prix annoncées sur les composants de puissance, portées par la demande IA.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>La reprise automobile européenne reste fragile.</li><li>Concurrence chinoise sur le carbure de silicium.</li><li>Change euro/dollar.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Numéro un mondial des semi-conducteurs de puissance et des microcontrôleurs automobiles. Seul acteur qui maîtrise les trois matériaux (Si, SiC, GaN) à grande échelle, avec une production en 300 mm.</p>
+      <h4>Moteurs de croissance</h4><p>Alimentation 800 V des racks IA, véhicules électriques, renouvelables, robotique.</p>
+      <h4>Valorisation</h4><p>Environ 25x les bénéfices à 12 mois (estimation). UBS est neutre avec un objectif de 64 €.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:65%"></span></span><span class="m-val">6,5</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:55%"></span></span><span class="m-val">5,5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:65%"></span></span><span class="m-val">6,5</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −25 %, central +15 %, optimiste +35 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="66.5" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="206.8" y1="16" y2="16"/><circle class="dot-neg" cx="66.5" cy="16" r="4"/><circle class="dot-pos" cx="206.8" cy="16" r="4"/><rect class="mid" x="158.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −25 %</span> · <span>Central +15 %</span> · <span class="pos">Optimiste +35 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats FY26 et guidage FY27 (mi-novembre)</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r19">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">19</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>Qualcomm</h3>
+      <div class="chips"><span class="tick">QCOM</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">SoC mobiles, PC, automobile, data center</p>
+    </div>
+    <div class="total"><span class="total-n">6,25</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 187 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 200 Md$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 17-19x BPA 12 mois</dd></div><div class="spec"><dt>Croissance</dt><dd>CA Apple ≈ −50 % · accord Amazon</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°19</span> La valeur décotée du classement. Qualcomm se paie 17-19x avec un bilan solide et un retour à l'actionnaire généreux, et la perte des modems d'Apple est connue. Deux options ne sont pas payées : l'accord pluri-générationnel avec Amazon sur les data centers IA (5 Md$ de revenus de remplacement visés sur l'exercice 2027) et les PC Snapdragon. La croissance du cœur de métier reste faible, d'où la 19e place.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>Collaboration pluri-générationnelle avec Amazon pour l'infrastructure IA (8 septembre). Les bons de souscription d'Amazon ne s'exercent que si des jalons commerciaux sont atteints.</li><li>Diversification dans l'automobile (Snapdragon Digital Chassis) et les PC (X Elite).</li><li>Rachats d'actions et dividende : un rendement total élevé pour l'actionnaire.</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>CA Apple en baisse d'environ 50 % d'un trimestre à l'autre avec la sortie des modems.</li><li>La montée en puissance dans les data centers se fait à marge plus faible (-1,5 à −2 points sur la marge QCT).</li><li>Smartphone mature et concurrence de MediaTek.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Portefeuille de brevets cellulaires très rentable (QTL), leadership des SoC Android haut de gamme, efficacité énergétique.</p>
+      <h4>Moteurs de croissance</h4><p>Data center (AI200/AI250), automobile, PC, objets connectés.</p>
+      <h4>Valorisation</h4><p>Environ 17-19x les bénéfices à 12 mois : le plus bas multiple parmi les leaders hors mémoire et NXP.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:70%"></span></span><span class="m-val">7</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:40%"></span></span><span class="m-val">4</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:80%"></span></span><span class="m-val">8</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:60%"></span></span><span class="m-val">6</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:50%"></span></span><span class="m-val">5</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −20 %, central +12 %, optimiste +30 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="78.2" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="195.1" y1="16" y2="16"/><circle class="dot-neg" cx="78.2" cy="16" r="4"/><circle class="dot-pos" cx="195.1" cy="16" r="4"/><rect class="mid" x="151.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −20 %</span> · <span>Central +12 %</span> · <span class="pos">Optimiste +30 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T4 FY26 (début novembre) · détails de l'accord Amazon</p>
+    </section>
+  </div>
+</article>
+<article class="card" id="r20">
+  <header class="card-head">
+    <div class="rank b3"><span class="rank-n">20</span><span class="rank-bin">BIN 3</span></div>
+    <div class="ident">
+      <h3>Lumentum</h3>
+      <div class="chips"><span class="tick">LITE</span><span class="venue">Nasdaq</span></div>
+      <p class="segment">Lasers &amp; optique pour data centers</p>
+    </div>
+    <div class="total"><span class="total-n">6,20</span><span class="total-l">score /10</span></div>
+  </header>
+  <dl class="specs"><div class="spec"><dt>Cours</dt><dd>≈ 1 000 $</dd></div><div class="spec"><dt>Capitalisation</dt><dd>≈ 70 Md$ (est.)</dd></div><div class="spec"><dt>Valorisation</dt><dd>≈ 50x BPA 12 mois (est.)</dd></div><div class="spec"><dt>Croissance</dt><dd>CA T1 FY27 guidé +130 %</dd></div></dl>
+  <p class="why"><span class="why-l">Pourquoi n°20</span> Le goulot d'étranglement de l'optique IA. La demande de lasers EML dépasse l'offre de plus de 30 % et le PDG reconnaît être « très en retard » sur les lasers haute puissance pour l'optique co-packagée. La rareté des capacités en phosphure d'indium est un vrai moat. Sa valorisation (environ 50x) et sa volatilité (-12 % pour l'optique le 14 septembre) la limitent à une ligne satellite.</p>
+  <div class="cols">
+    <section class="block">
+      <h4>Thèse</h4><ul class="list"><li>T1 FY27 guidé entre 1,225 et 1,275 Md$ (+130 %), avec 4,05 à 4,35 $ de BPA et environ 40 % de marge opérationnelle.</li><li>Lasers EML : plus de 50 % de volumes en plus attendus d'ici décembre 2026. Lasers de pompe en hausse de plus de 80 %.</li><li>Revenus CPO significatifs dès la fin 2026 (lasers ultra-haute puissance).</li></ul>
+      <h4>Risques</h4><ul class="list risks"><li>Valorisation et volatilité extrêmes : l'optique a fait les montagnes russes en 2026.</li><li>Des capacités de lasers concurrentes arriveront (Coherent, acteurs asiatiques).</li><li>Cyclicité historique des composants optiques.</li></ul>
+    </section>
+    <section class="block">
+      <h4>Moat</h4><p>Parmi les rares usines de lasers InP capables de produire en volume des EML à 200G par voie. Une telle capacité prend 18 à 24 mois à construire.</p>
+      <h4>Moteurs de croissance</h4><p>Transceivers 1,6T et 3,2T, optique co-packagée, lasers de pompe, commutateurs optiques (OCS).</p>
+      <h4>Valorisation</h4><p>Environ 50x les bénéfices estimés. L'objectif moyen des analystes (environ 1 105 $) laisse peu de marge.</p>
+    </section>
+  </div>
+  <div class="cols foot">
+    <section class="block">
+      <h4>Notes</h4><div class="meters"><div class="meter"><span class="m-lbl">Moat &amp; qualité</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div><div class="meter"><span class="m-lbl">Croissance 26-28</span><span class="m-track"><span class="m-fill" style="width:95%"></span></span><span class="m-val">9,5</span></div><div class="meter"><span class="m-lbl">Valorisation</span><span class="m-track"><span class="m-fill" style="width:35%"></span></span><span class="m-val">3,5</span></div><div class="meter"><span class="m-lbl">Risque (10 = faible)</span><span class="m-track"><span class="m-fill" style="width:40%"></span></span><span class="m-val">4</span></div><div class="meter"><span class="m-lbl">Catalyseurs</span><span class="m-track"><span class="m-fill" style="width:75%"></span></span><span class="m-val">7,5</span></div></div>
+    </section>
+    <section class="block">
+      <h4>Scénarios 12-18 mois <span class="h4-note">indicatifs</span></h4>
+      <div class="scen-big"><svg class="scen" viewBox="0 0 320 44" width="320" height="44" role="img" aria-label="Scénarios : pessimiste −50 %, central +15 %, optimiste +60 %"><line class="grid" x1="8.0" x2="8.0" y1="4" y2="26"/><text class="tick" x="8.0" y="40" text-anchor="middle">-50 %</text><line class="grid" x1="66.5" x2="66.5" y1="4" y2="26"/><text class="tick" x="66.5" y="40" text-anchor="middle">-25 %</text><line class="grid" x1="124.9" x2="124.9" y1="4" y2="26"/><text class="tick" x="124.9" y="40" text-anchor="middle">0 %</text><line class="grid" x1="183.4" x2="183.4" y1="4" y2="26"/><text class="tick" x="183.4" y="40" text-anchor="middle">+25 %</text><line class="grid" x1="241.8" x2="241.8" y1="4" y2="26"/><text class="tick" x="241.8" y="40" text-anchor="middle">+50 %</text><line class="grid" x1="300.3" x2="300.3" y1="4" y2="26"/><text class="tick" x="300.3" y="40" text-anchor="middle">+75 %</text><line class="zero" x1="124.9" x2="124.9" y1="7" y2="25"/><line class="span-neg" x1="8.0" x2="124.9" y1="16" y2="16"/><line class="span-pos" x1="124.9" x2="265.2" y1="16" y2="16"/><circle class="dot-neg" cx="8.0" cy="16" r="4"/><circle class="dot-pos" cx="265.2" cy="16" r="4"/><rect class="mid" x="158.5" y="9" width="3" height="14" rx="1"/></svg></div>
+      <p class="scen-vals"><span class="neg">Pessimiste −50 %</span> · <span>Central +15 %</span> · <span class="pos">Optimiste +60 %</span></p>
+      <p class="cat"><span class="cat-l">Catalyseurs</span> Résultats T1 FY27 (début novembre) · premiers revenus CPO</p>
+    </section>
+  </div>
+</article>
+</section>
+
+<section class="section" id="recales" aria-labelledby="rej-t">
+  <h2 id="rej-t">Analysés, mais recalés</h2>
+  <p class="section-lede">Ces sociétés ont été étudiées avec la même grille. Elles sortent du top 20 surtout parce que leur prix intègre déjà le scénario favorable, ou parce que leur thèse reste trop incertaine.</p>
+  <ul class="rejects"><li class="rej"><div class="rej-top"><span class="tick">MRVL</span><strong>Marvell</strong></div><div class="rej-metric">≈ 263 $ · ≈ 48x fwd</div><p>Partenariat ASIC avec Google jusqu'en 2028 et 18 Md$ de CA visés sur l'exercice 2028. Mais le titre a déjà pris 210 % en 2026.</p></li><li class="rej"><div class="rej-top"><span class="tick">ALAB</span><strong>Astera Labs</strong></div><div class="rej-metric">≈ 345 $ · ≈ 115x fwd</div><p>Excellente franchise PCIe/UALink, mais un multiple qui a oscillé entre 50x et 140x en six mois.</p></li><li class="rej"><div class="rej-top"><span class="tick">ARM</span><strong>Arm Holdings</strong></div><div class="rej-metric">≈ 310 $ · PER &gt; 300x</div><p>Royalties v9 et data center en forte hausse, mais 67 fois les ventes : la valorisation est hors de portée.</p></li><li class="rej"><div class="rej-top"><span class="tick">INTC</span><strong>Intel</strong></div><div class="rej-metric">≈ 110-115 $ · ≈ 57x fwd</div><p>Redressement réel (18A, Panther Lake), mais la fonderie perd encore environ 2,5 Md$ par trimestre. Les décisions clients sur le 14A seront un catalyseur binaire.</p></li><li class="rej"><div class="rej-top"><span class="tick">COHR</span><strong>Coherent</strong></div><div class="rej-metric">≈ 422 $ · ≈ 49x fwd</div><p>Vise plus de 3 Md$ de CA trimestriel, mais avec environ 40 % de marge brute et un multiple élevé. Lumentum est préféré pour la rareté de ses lasers.</p></li><li class="rej"><div class="rej-top"><span class="tick">2454</span><strong>MediaTek</strong></div><div class="rej-metric">NT$ 4 910 · ≈ 45x 2027</div><p>Co-conçoit le TPU 8t de Google. Le PER est presque quatre fois sa médiane historique.</p></li><li class="rej"><div class="rej-top"><span class="tick">SNDK</span><strong>SanDisk</strong></div><div class="rej-metric">≈ 1 740 $ · ≈ 8x fwd</div><p>Pénurie de NAND QLC, mais un produit plus banalisé que la DRAM, +647 % en 2026 et 71 % de marge opérationnelle : un profil de sommet.</p></li><li class="rej"><div class="rej-top"><span class="tick">285A</span><strong>Kioxia</strong></div><div class="rej-metric">≈ 41 T¥ de capitalisation</div><p>Même logique que SanDisk (+600 % en 2026), avec plus de volatilité.</p></li><li class="rej"><div class="rej-top"><span class="tick">TER</span><strong>Teradyne</strong></div><div class="rej-metric">≈ 380 $ · 29-41x fwd</div><p>L'IA fait plus de 60 % du CA. Advantest est préféré pour sa part de marché.</p></li><li class="rej"><div class="rej-top"><span class="tick">8035</span><strong>Tokyo Electron</strong></div><div class="rej-metric">≈ 32x fwd</div><p>Excellent, mais fait doublon avec Lam et Applied Materials pour un multiple plus élevé.</p></li><li class="rej"><div class="rej-top"><span class="tick">MPWR</span><strong>Monolithic Power</strong></div><div class="rej-metric">≈ 1 380 $ · PER ≈ 70x</div><p>Qualité remarquable dans l'alimentation IA, mais trop cher.</p></li><li class="rej"><div class="rej-top"><span class="tick">ON</span><strong>onsemi</strong></div><div class="rej-metric">≈ 77 $ · -44 % en 3 mois</div><p>Pari contrarian sur le 800 V (contenu par rack de 15 000 à 115 000 $). Objectifs 2030 jugés modestes et rachat de Synaptics dilutif. À surveiller.</p></li><li class="rej"><div class="rej-top"><span class="tick">GFS</span><strong>GlobalFoundries</strong></div><div class="rej-metric">≈ 47 $ · ≈ -50 % du plus haut</div><p>La photonique silicium double, mais la rentabilité reste insuffisante. À surveiller.</p></li><li class="rej"><div class="rej-top"><span class="tick">BESI</span><strong>BE Semiconductor</strong></div><div class="rej-metric">-46 % depuis juin</div><p>Commandes d'hybrid bonding doublées, mais encore environ 68x les bénéfices normalisés. Candidat au rebond, coté à Amsterdam (PEA).</p></li><li class="rej"><div class="rej-top"><span class="tick">STM</span><strong>STMicroelectronics</strong></div><div class="rej-metric">Euronext Paris (PEA)</div><p>CA data center visé au-delà de 0,5 Md$ en 2026 puis de 1 Md$ en 2027 avec AWS. Moins rentable qu'Infineon sur la puissance.</p></li><li class="rej"><div class="rej-top"><span class="tick">CAMT</span><strong>Camtek</strong></div><div class="rej-metric">≈ 147 $ · PER ≈ 150x</div><p>Leader de l'inspection du packaging avancé, mais trop cher.</p></li><li class="rej"><div class="rej-top"><span class="tick">LSCC</span><strong>Lattice</strong></div><div class="rej-metric">≈ 35x fwd</div><p>Belle niche FPGA (+62 % de CA au T2). Liste de surveillance.</p></li><li class="rej"><div class="rej-top"><span class="tick">RMBS</span><strong>Rambus</strong></div><div class="rej-metric">≈ 98 $</div><p>Interfaces mémoire DDR5 et MRDIMM, profite de l'inférence. Liste de surveillance.</p></li><li class="rej"><div class="rej-top"><span class="tick">SITM</span><strong>SiTime</strong></div><div class="rej-metric">≈ 657 $</div><p>Oscillateurs MEMS pour data centers. Niche de qualité, multiple élevé.</p></li><li class="rej"><div class="rej-top"><span class="tick">SNPS</span><strong>Synopsys · Cadence</strong></div><div class="rej-metric">EDA</div><p>Moat exceptionnel, mais ce sont des éditeurs de logiciels de conception. Thèse différente, hors périmètre strict.</p></li><li class="rej"><div class="rej-top"><span class="tick">SMIC</span><strong>SMIC · Cambricon</strong></div><div class="rej-metric">Shanghai / HK</div><p>Exclus : accès limité, risque réglementaire et sanctions.</p></li></ul>
+</section>
+
+<section class="section split" id="risques" aria-labelledby="risk-t">
+  <div>
+    <h2 id="risk-t">Les cinq risques qui pèsent sur tout le secteur</h2>
+    <ol class="risks-list"><li><strong>Le financement du capex IA</strong><p>1,3 T$ de capex des hyperscalers attendu en 2027 (+50 %), mais seul Microsoft resterait FCF positif. Le financement fournisseur se multiplie : véhicules XPV de Broadcom, bons de souscription AMD/OpenAI, Qualcomm/Amazon.</p></li><li><strong>Le débat « Pace the Frontier »</strong><p>Le 12 septembre, Dario Amodei appelle à ralentir les modèles de frontière. Sam Altman, Elon Musk et Demis Hassabis approuvent. Le SOX perd 5,9 % le 14 septembre.</p></li><li><strong>Les taux</strong><p>La Fed relève ses taux de 25 pb le 16 septembre (3,75-4,00 %) et en annonce d'autres. L'inflation est entretenue par l'énergie (guerre en Iran), les droits de douane et le capex IA lui-même.</p></li><li><strong>Le pic du cycle mémoire</strong><p>Capex mémoire 2027 en hausse de 46 % selon Citi : nouvelle offre au S2 2027 et en 2028. La mémoire est le segment où le cycle peut se retourner le plus vite.</p></li><li><strong>La géopolitique</strong><p>Taïwan, tarifs Section 232 à 25 % sur certaines puces avancées, licences H200 au cas par cas pour la Chine.</p></li></ol>
+  </div>
+  <div>
+    <h2>Calendrier des catalyseurs</h2>
+    <p class="section-lede small">Saison des résultats du T3. Dates indicatives, à confirmer auprès de chaque société.</p>
+    <table class="cal"><tbody><tr><th scope="row">Début octobre</th><td>Samsung : résultats préliminaires T3</td></tr><tr><th scope="row">Mi-octobre</th><td>ASML (T3 et commandes) · TSMC (T3 et guidage T4)</td></tr><tr><th scope="row">Fin octobre</th><td>Lam Research · KLA · Texas Instruments · NXP · SK hynix · ASM International · Advantest</td></tr><tr><th scope="row">Début novembre</th><td>AMD · Qualcomm · Lumentum</td></tr><tr><th scope="row">Mi-novembre</th><td>Applied Materials · Infineon</td></tr><tr><th scope="row">Fin novembre</th><td>Nvidia · Analog Devices</td></tr><tr><th scope="row">Décembre</th><td>Credo · Broadcom · Micron</td></tr></tbody></table>
+    <h2 class="h2-gap">Comment utiliser ce classement</h2>
+    <ul class="howto">
+      <li>BIN 1 en cœur de poche (environ 50 % de l'exposition semi-conducteurs), BIN 2 autour de 35 %, BIN 3 autour de 15 % en lignes plus petites.</li>
+      <li>Plafonner la mémoire (Samsung, Micron, SK hynix) autour de 15 % au total : c'est le segment le plus cyclique.</li>
+      <li>Entrer progressivement sur trois à six mois. Le secteur a pris 77 % en neuf mois et a déjà perdu 22 % en un seul mois cette année.</li>
+      <li>En PEA : ASML, ASM International et Infineon, cotés en Europe. Les autres valeurs se logent en compte-titres.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="methode" aria-labelledby="meth-t">
+  <h2 id="meth-t">Méthode</h2>
+  <dl class="method">
+    <div><dt>Moat & qualité · 25 %</dt><dd>Part de marché, coûts de changement pour les clients, marges, position dans la chaîne de valeur.</dd></div>
+    <div><dt>Croissance 2026-2028 · 20 %</dt><dd>Croissance attendue du chiffre d'affaires et du BPA, solidité des technologies qui la portent.</dd></div>
+    <div><dt>Valorisation · 25 %</dt><dd>PER à 12 mois et sur les bénéfices futurs, rapporté à la croissance et à l'historique. 10 = bon marché.</dd></div>
+    <div><dt>Risque · 20 %</dt><dd>Cyclicité, concentration client, géopolitique, ampleur de la hausse récente. 10 = risque faible.</dd></div>
+    <div><dt>Catalyseurs · 10 %</dt><dd>Visibilité à 6-12 mois : carnets de commandes, guidages, lancements de produits.</dd></div>
+  </dl>
+  <p class="note">Les cours et multiples proviennent de sources publiques entre le 25 et le 30 septembre 2026. Ils sont arrondis et parfois divergents d'une source à l'autre ; les capitalisations marquées (est.) sont calculées. Les notes et les scénarios sont mon jugement à partir de ces données, pas des objectifs de cours. Ce document n'est pas un conseil en investissement personnalisé : vérifiez les chiffres et votre situation avant d'agir.</p>
+</section>
+
+<section class="section" id="sources" aria-labelledby="src-t">
+  <h2 id="src-t">Sources</h2>
+  <div class="sources"><div class="src-group"><h3>Marché &amp; macro</h3><ul><li><a href="https://www.investing.com/indices/phlx-semiconductor-historical-data" target="_blank" rel="noopener">SOX : historique (Investing.com)</a></li><li><a href="https://www.cnbc.com/2026/07/29/chip-selloff-sk-hynix-samsung-softbank.html" target="_blank" rel="noopener">Chip stocks shed more than $1 trillion (CNBC, juillet 2026)</a></li><li><a href="https://www.tradingkey.com/analysis/stocks/us-stocks/262167103-us-stock-dow-nasdaq-sp500-drop-philadelphia-semiconductor-anthropic-ai-data-center-micron-tradingkey" target="_blank" rel="noopener">SOX -6 % après l'appel d'Anthropic (TradingKey)</a></li><li><a href="https://www.vaneck.com/offshore/en/news-and-insights/blogs/thematic-investing/pace-the-frontier-what-the-ai-slowdown-debate-means-for-investors/" target="_blank" rel="noopener">Pace the Frontier : ce que le débat change (VanEck)</a></li><li><a href="https://www.fool.com/investing/2026/09/06/hyperscalers-driving-ai-capex-cash-flow/" target="_blank" rel="noopener">Hyperscalers : 1,3 T$ de capex en 2027 (Motley Fool)</a></li><li><a href="https://admiralmarkets.com/analytics/traders-blog/fed-raised-interest-rates" target="_blank" rel="noopener">Hausse des taux de la Fed (Admiral Markets)</a></li><li><a href="https://www.ghy.com/trade-compliance/us-25-percent-tariff-semiconductors-section-232/" target="_blank" rel="noopener">Tarifs Section 232 (GHY)</a></li><li><a href="https://www.home.saxo/content/articles/macro/market-quick-take---chip-rally-lifts-tokyo-as-long-yields-stay-high---01-october-2026-01102026" target="_blank" rel="noopener">Market Quick Take du 1er octobre 2026 (Saxo)</a></li></ul></div><div class="src-group"><h3>Calcul &amp; IA</h3><ul><li><a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027" target="_blank" rel="noopener">Nvidia : résultats T2 FY27</a></li><li><a href="https://finance.yahoo.com/technology/article/nvidias-valuation-just-hit-a-multiyear-low--even-as-revenue-sets-records-155948933.html" target="_blank" rel="noopener">Nvidia : valorisation au plus bas depuis des années (Yahoo Finance)</a></li><li><a href="https://www.tikr.com/blog/nvidia-forecast-vera-rubin-ramp-and-a-108-billion-guide-set-the-stage-for-2027" target="_blank" rel="noopener">Nvidia : rampe Rubin et guidage (TIKR)</a></li><li><a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-third-quarter-fiscal-year-2026-financial" target="_blank" rel="noopener">Broadcom : résultats T3 FY26</a></li><li><a href="https://www.cnbc.com/2026/09/02/broadcom-avgo-q3-earnings-report-2026.html" target="_blank" rel="noopener">Broadcom : 230 Md$ de CA IA en 2028 (CNBC)</a></li><li><a href="https://fool.com/investing/2026/09/27/broadcom-stock-is-back-where-it-ended-2025-but-its-earnings-are-about-43-higher-is-it-a-buy" target="_blank" rel="noopener">Broadcom revenu à son niveau de fin 2025 (Motley Fool)</a></li><li><a href="https://finance.biggo.com/news/US_AMD_2026-08-04" target="_blank" rel="noopener">AMD : appel T2 2026 (BigGo)</a></li><li><a href="https://www.fool.com/investing/2026/09/06/prediction-data-center-passes-70-of-amd-s-revenue-in-2027-before-the-helios-ramp-is-finished/" target="_blank" rel="noopener">AMD : data center 2027 (Motley Fool)</a></li><li><a href="https://investors.credosemi.com/news-events/news/news-details/2026/Credo-Technology-Group-Holding-Ltd-Reports-First-Quarter-of-Fiscal-Year-2027-Financial-Results/" target="_blank" rel="noopener">Credo : résultats T1 FY27</a></li><li><a href="https://finance.yahoo.com/technology/ai/articles/credo-vs-astera-labs-ai-144800511.html" target="_blank" rel="noopener">Credo vs Astera Labs (Yahoo Finance)</a></li><li><a href="https://247wallst.com/investing/2026/09/12/qualcomm-lost-apples-modem-business-amazon-just-offered-a-60-billion-escape-route/" target="_blank" rel="noopener">Qualcomm, Apple et Amazon (24/7 Wall St.)</a></li><li><a href="https://www.semiconductor-today.com/news_items/2026/aug/lumentum-190826.shtml" target="_blank" rel="noopener">Lumentum : T4 FY26 (Semiconductor Today)</a></li></ul></div><div class="src-group"><h3>Fonderie &amp; mémoire</h3><ul><li><a href="https://www.sec.gov/Archives/edgar/data/0001046179/000104617926000658/tsm-revenue20260910.htm" target="_blank" rel="noopener">TSMC : CA d'août 2026 (SEC)</a></li><li><a href="https://finance.yahoo.com/technology/articles/tsmc-rises-2027-capex-forecast-192841498.html" target="_blank" rel="noopener">TSMC : capex 2027 (Yahoo Finance)</a></li><li><a href="https://www.globenewswire.com/news-release/2026/09/30/3372366/14450/en/micron-technology-inc-reports-record-fiscal-fourth-quarter-and-full-year-2026-results.html" target="_blank" rel="noopener">Micron : résultats T4 FY26</a></li><li><a href="https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html" target="_blank" rel="noopener">Micron : réaction du marché (CNBC)</a></li><li><a href="https://en.sedaily.com/finance/2026/09/01/hbm-rivalry-shifts-as-samsung-gains-and-sk-hynix-slides" target="_blank" rel="noopener">HBM : Samsung progresse, SK hynix recule (Seoul Economic Daily)</a></li><li><a href="https://en.bloomingbit.io/feed/news/111643" target="_blank" rel="noopener">Samsung : prévisions de résultat 2027 (Bloomingbit)</a></li><li><a href="https://finance.yahoo.com/markets/stocks/articles/sk-hynix-nasdaq-debut-adrs-114527821.html" target="_blank" rel="noopener">SK hynix : cotation de l'ADR (Yahoo Finance)</a></li><li><a href="https://www.trendforce.com/news/2026/08/13/news-samsung-sk-hynixs-hbm4-push-puts-hbm-general-memory-pricing-in-the-spotlight-for-2h-earnings/" target="_blank" rel="noopener">Prix HBM4 et mémoire (TrendForce)</a></li><li><a href="https://www.moomoo.com/community/feed/dram-shortage-through-2031-citi-says-the-memory-supercycle-may-117290602266630" target="_blank" rel="noopener">Citi : pénurie de DRAM (Moomoo)</a></li></ul></div><div class="src-group"><h3>Équipement &amp; test</h3><ul><li><a href="https://247wallst.com/investing/2026/09/15/asmls-current-share-price-of-1575-shouldnt-scare-you/" target="_blank" rel="noopener">ASML : cours et perspectives (24/7 Wall St.)</a></li><li><a href="https://finance.yahoo.com/technology/ai/articles/lam-research-lifts-2026-wfe-180229282.html" target="_blank" rel="noopener">Lam relève son WFE 2026 (Yahoo Finance)</a></li><li><a href="https://finance.biggo.com/news/US_LRCX_2026-07-29" target="_blank" rel="noopener">Lam : appel T4 FY26 (BigGo)</a></li><li><a href="https://www.morningstar.com/stocks/raising-valuations-applied-materials-kla-lam-research-with-higher-ai-expectations-wfe" target="_blank" rel="noopener">Morningstar : AMAT, KLA, Lam</a></li><li><a href="https://www.sec.gov/Archives/edgar/data/0000319201/000119312526212093/d116682dex991.htm" target="_blank" rel="noopener">KLA : division d'actions 10:1 (SEC)</a></li><li><a href="https://www.ad-hoc-news.de/boerse/news/corporate-news/advantest-stock-gains-5-99-percent-as-ai-chip-momentum-lifts-outlook/70145014" target="_blank" rel="noopener">Advantest : dynamique IA (ad-hoc-news)</a></li><li><a href="https://www.ad-hoc-news.de/boerse/news/corporate-news/asm-international-stock-gains-as-bank-of-america-lifts-upside-case/70124729" target="_blank" rel="noopener">ASM International : relèvement BofA (ad-hoc-news)</a></li><li><a href="https://convequity.substack.com/p/no-ald-no-ai-the-case-for-asm-international" target="_blank" rel="noopener">No ALD, No AI (Convequity)</a></li></ul></div><div class="src-group"><h3>Analogique &amp; puissance</h3><ul><li><a href="https://www.ad-hoc-news.de/boerse/news/corporate-news/analog-devices-stock-edges-lower-as-q3-2026-results-and-dividend-set-the/70040176" target="_blank" rel="noopener">ADI : résultats T3 FY26 (ad-hoc-news)</a></li><li><a href="https://www.tikr.com/blog/texas-instruments-stock-is-up-64-in-2026-the-analog-chip-recovery-has-only-just-started" target="_blank" rel="noopener">Texas Instruments : la reprise commence (TIKR)</a></li><li><a href="https://www.investing.com/news/company-news/nxp-q2-2026-slides-record-results-ambitious-2030-targets-93CH-4818254" target="_blank" rel="noopener">NXP : présentation T2 2026 (Investing.com)</a></li><li><a href="https://www.eqs-news.com/news/corporate/growth-prospects-improved-infineon-raises-full-year-guidance-ai-boom-strengthens-further-automotive-order-intake-improves-revised-segment-structure-effective-from-the-fourth-quarter/9475cbe3-5f77-4086-a049-cdbd701ec652_en" target="_blank" rel="noopener">Infineon relève ses objectifs (EQS)</a></li><li><a href="https://247wallst.com/investing/2026/09/17/ceo-claims-investors-got-it-wrong-on-30-billion-shortfall-as-on-stock-plummets-9/" target="_blank" rel="noopener">onsemi après sa journée investisseurs (24/7 Wall St.)</a></li></ul></div><div class="src-group"><h3>Recalés</h3><ul><li><a href="https://247wallst.com/investing/2026/09/29/marvell-is-up-210-in-2026-take-profits-or-buy-more/" target="_blank" rel="noopener">Marvell +210 % en 2026 (24/7 Wall St.)</a></li><li><a href="https://247wallst.com/investing/2026/09/21/from-24-to-109-intels-comeback-is-real-the-price-tag-is-now-the-problem/" target="_blank" rel="noopener">Intel : le prix devient le problème (24/7 Wall St.)</a></li><li><a href="https://finance.yahoo.com/markets/stocks/articles/arm-shares-surge-270-2026-170700163.html" target="_blank" rel="noopener">Arm +270 % en 2026 (Yahoo Finance)</a></li><li><a href="https://finance.yahoo.com/markets/stocks/articles/sandisk-stock-soared-more-500-170024286.html" target="_blank" rel="noopener">SanDisk +500 % (Yahoo Finance)</a></li><li><a href="https://finance.biggo.com/news/7557feaa-5b7a-4c9e-be62-3a3fe1497170" target="_blank" rel="noopener">MediaTek sous 5 000 NT$ (BigGo)</a></li></ul></div></div>
+</section>
+
+<footer class="foot-page">
+  <p>Analyse rédigée par Claude le 1er octobre 2026 à partir de recherches web. Les marchés évoluent vite : relisez les résultats du T3 avant toute décision.</p>
+</footer>
+</div>
+
+</body>
+</html>
